@@ -1,0 +1,14 @@
+{
+  "timestamp": "2026-01-12T06:29:13.788Z",
+  "pmValue": 84,
+  "station": "Vyttila (Simulated)",
+  "isSpike": true,
+  "suspects": [
+    {
+      "name": "Vyttila Mobility Hub Ext",
+      "lat": 9.967,
+      "lng": 76.32,
+      "distance": "0.78"
+    }
+  ]
+}
