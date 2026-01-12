@@ -1,14 +1,26 @@
 {
-  "timestamp": "2026-01-12T06:29:13.788Z",
-  "pmValue": 84,
-  "station": "Vyttila (Simulated)",
+  "timestamp": "2026-01-12T09:51:47.542Z",
+  "pmValue": 84.5,
+  "station": "Vyttila Station (Simulated)",
   "isSpike": true,
   "suspects": [
     {
       "name": "Vyttila Mobility Hub Ext",
       "lat": 9.967,
       "lng": 76.32,
-      "distance": "0.78"
+      "distance": 0.16
+    },
+    {
+      "name": "Kochi Metro - Chembumukku",
+      "lat": 10.0075,
+      "lng": 76.3195,
+      "distance": 4.62
+    },
+    {
+      "name": "Kakkanad SmartCity P3",
+      "lat": 10.0085,
+      "lng": 76.362,
+      "distance": 6.52
     }
   ]
 }
