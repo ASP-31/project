@@ -1,0 +1,17 @@
+/* css/global.css */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f7f7f7;
+}
+
+h1, h2, h3 {
+  font-family: 'Roboto', sans-serif;
+}
+
+/* Custom class not in Tailwind */
+.btn-custom {
+  background: linear-gradient(to right, #4f46e5, #3b82f6);
+  color: white;
+  border-radius: 12px;
+  padding: 10px 20px;
+}
