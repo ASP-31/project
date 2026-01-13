@@ -89,7 +89,7 @@ const { getDistance } = require('./services/distance');
 
 const app = express();
 const PORT = 3000;
-
+app.use(express.static(path.join(__dirname, '../frontend')));
 // 1. Middleware
 app.use(cors()); // Crucial: Allows your frontend to talk to this backend
 app.use(express.json());
@@ -138,6 +138,14 @@ app.get('/api/report', async (req, res) => {
             timestamp: new Date().toISOString(),
             pmValue: pmValue,
             station: stationName,
+            pollutants: {
+                "pm25": 84.5,
+                "pm10": 132.2
+            },
+            "aqi":{
+                value: 151,
+                status: "Alert"
+            },
             isSpike: pmValue > 60,
             suspects: []
         };
