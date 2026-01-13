@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Incident Map | Air Quality System</title>
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Leaflet -->
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  />
+
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    #map { height: 520px; }
+  </style>
+</head>
+
+<body class="bg-slate-100">
+
+<!-- HEADER -->
+<header class="bg-white shadow-md sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+    <div class="flex items-center gap-3 font-bold text-xl">
+      <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-emerald-500 rounded-xl flex items-center justify-center text-white">
+        🌬️
+      </div>
+      Air Quality System
+    </div>
+
+    <nav class="flex gap-8 text-slate-600 font-medium">
+      <a href="dashboard.html">Dashboard</a>
+      <a href="incident.html">Incident</a>
+      <a href="map.html" class="text-blue-600 font-semibold">Map</a>
+    </nav>
+  </div>
+</header>
+
+<!-- CONTENT -->
+<main class="max-w-7xl mx-auto px-6 py-10 grid lg:grid-cols-3 gap-8">
+
+  <!-- LEFT PANEL -->
+  <aside class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-6">
+
+    <h2 class="text-xl font-bold">Incident Map</h2>
+
+    <!-- Station Selector -->
+    <div>
+      <label class="block text-sm font-medium text-slate-600 mb-2">
+        Monitoring Station
+      </label>
+      <select id="stationSelect"
+        class="w-full rounded-xl border border-slate-300 px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+        <option value="vyttila">Vyttila Station</option>
+        <option value="kakkanad">Kakkanad Station</option>
+      </select>
+    </div>
+
+    <!-- Info Card -->
+    <div class="rounded-2xl bg-gradient-to-br from-emerald-50 to-white border border-emerald-200 p-5">
+      <h3 class="font-semibold text-emerald-700 mb-2">Station Overview</h3>
+      <p class="text-sm text-slate-700"><strong>Status:</strong> Pollution Spike</p>
+      <p class="text-sm text-slate-700"><strong>PM Level:</strong> 84.5 µg/m³</p>
+      <p class="text-sm text-slate-700"><strong>Suspected Sites:</strong> 3 nearby</p>
+    </div>
+
+    <!-- Action -->
+    <button
+      onclick="location.href='suspected.html'"
+      class="mt-auto w-full py-3 rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-600 text-white font-semibold shadow-md hover:shadow-lg transition">
+      Identify Probable Source
+    </button>
+
+  </aside>
+
+  <!-- MAP AREA -->
+  <section class="lg:col-span-2 bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+    <h2 class="text-xl font-bold mb-4">Live Incident Map</h2>
+    <div id="map" class="rounded-xl"></div>
+
+    <p class="text-sm text-slate-500 mt-4">
+      Colored rings indicate distance-based influence zones around the station.
+    </p>
+  </section>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="bg-slate-900 text-slate-300 mt-20">
+  <div class="text-center py-6 text-sm border-t border-slate-700">
+    © 2026 Ernakulam Air Quality Project
+  </div>
+</footer>
+
+<!-- LEAFLET SCRIPT -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script>
+  const stations = {
+    vyttila: {
+      name: "Vyttila Station",
+      lat: 9.967,
+      lng: 76.32,
+      suspects: [
+        {
+          name: "Vyttila Mobility Hub Ext",
+          lat: 9.967,
+          lng: 76.32,
+          severity: "high"
+        },
+        {
+          name: "Kochi Metro - Chembumukku",
+          lat: 10.0075,
+          lng: 76.3195,
+          severity: "medium"
+        },
+        {
+          name: "Kakkanad SmartCity P3",
+          lat: 10.0085,
+          lng: 76.362,
+          severity: "low"
+        }
+      ]
+    },
+
+    kakkanad: {
+      name: "Kakkanad Station",
+      lat: 10.015,
+      lng: 76.341,
+      suspects: [
+        {
+          name: "Infopark Phase 1",
+          lat: 10.012,
+          lng: 76.343,
+          severity: "high"
+        },
+        {
+          name: "Seaport Road",
+          lat: 10.018,
+          lng: 76.337,
+          severity: "medium"
+        }
+      ]
+    }
+  };
+
+  const severityStyle = {
+    high:   { color: "#ef4444" },   // red
+    medium:{ color: "#eab308" },   // yellow
+    low:   { color: "#94a3b8" }    // gray
+  };
+
+  const map = L.map("map").setView([9.967, 76.32], 13);
+
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    attribution: "© OpenStreetMap"
+  }).addTo(map);
+
+  let layers = [];
+
+  function clearLayers() {
+    layers.forEach(layer => map.removeLayer(layer));
+    layers = [];
+  }
+
+  function renderStation(key) {
+    clearLayers();
+
+    const station = stations[key];
+    map.setView([station.lat, station.lng], 13);
+
+    // Station marker
+    layers.push(
+      L.marker([station.lat, station.lng])
+        .addTo(map)
+        .bindPopup(`<b>${station.name}</b><br>Monitoring Station`)
+    );
+
+    // Suspected sites with SEVERITY rings
+    station.suspects.forEach(site => {
+      const style = severityStyle[site.severity];
+
+      layers.push(
+        L.circleMarker([site.lat, site.lng], {
+          radius: 16,
+          color: style.color,
+          fillColor: style.color,
+          fillOpacity: 0.25,
+          weight: 2
+        })
+          .addTo(map)
+          .bindPopup(`
+            <b>${site.name}</b><br>
+            Likelihood: <b>${site.severity.toUpperCase()}</b>
+          `)
+      );
+    });
+  }
+
+  // Default load (from Incident → Map)
+  renderStation("vyttila");
+
+  document
+    .getElementById("stationSelect")
+    .addEventListener("change", e => renderStation(e.target.value));
+</script>
+
+</body>
+</html>
