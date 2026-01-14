@@ -111,26 +111,25 @@
   </footer>
 
   <!-- LEAFLET SCRIPT -->
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <script src="http://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
-  // 1. HIGH-ACCURACY COORDINATES
+  // 1. HIGH-ACCURACY COORDINATES (Matched to your scenarios.json)
   const coordsMap = {
-    "Vyttila Mobility Hub": [9.9678, 76.3212],
-    "Kaloor Junction": [9.9918, 76.2915],
-    "Kakkanad SmartCity": [10.0092, 76.3625],
-    "Edappally Toll": [10.0253, 76.3122],
-    "MG Road (Maharajas)": [9.9748, 76.2848],
-    "Eloor Industrial Area": [10.0461, 76.2955],
-    "Aluva Manappuram": [10.1085, 76.3555],
-    "Kalamassery Startup Village": [10.0515, 76.3252],
-    "Fort Kochi Pier": [9.9685, 76.2415],
-    "Tripunithura Statue": [9.9515, 76.3482]
+    "Vyttila Mobility Hub": [9.9670, 76.3200],
+    "Kaloor Junction": [9.9920, 76.2910],
+    "Kakkanad SmartCity": [10.0085, 76.3620],
+    "Edappally Toll": [10.0250, 76.3120],
+    "MG Road (Maharajas)": [9.9750, 76.2850],
+    "Eloor Industrial Area": [10.0450, 76.2950],
+    "Aluva Manappuram": [10.1080, 76.3550],
+    "Kalamassery Startup Village": [10.0520, 76.3250],
+    "Fort Kochi Pier": [9.9680, 76.2420],
+    "Tripunithura Statue": [9.9510, 76.3480]
   };
 
   // 2. INITIALIZE MAP
-  const map = L.map("map").setView([9.9678, 76.3212], 13);
+  const map = L.map("map").setView([9.9670, 76.3200], 13);
   L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
     attribution: "© OpenStreetMap"
   }).addTo(map);
@@ -140,11 +139,12 @@
   // 3. FETCH DATA & FLY TO LOCATION
   async function updateMap(stationName) {
     try {
-      const response = await fetch(`https://localhost:3000/api/report?zone=${encodeURIComponent(stationName)}`);
+      // FIX: Changed https to http for localhost
+      const response = await fetch(`http://localhost:3000/api/report?zone=${encodeURIComponent(stationName)}`);
       const data = await response.json();
 
       markersLayer.clearLayers();
-      const currentCoords = coordsMap[stationName] || [9.9678, 76.3212];
+      const currentCoords = coordsMap[stationName] || [9.9670, 76.3200];
 
       // Smoothly fly to the station
       map.flyTo(currentCoords, 14, { duration: 1.5 });
@@ -155,13 +155,6 @@
         .bindPopup(`<b>Station: ${data.station}</b><br>PM2.5: ${data.pm25} µg/m³`)
         .openPopup();
 
-      // Add 5km influence zone
-      L.circle(currentCoords, {
-        radius: 5000,
-        color: data.isSpike ? '#ef4444' : '#3b82f6',
-        fillOpacity: 0.1
-      }).addTo(markersLayer);
-
       // Add Suspect Site Markers
       if (data.suspects) {
         data.suspects.forEach(site => {
@@ -171,14 +164,11 @@
             fillOpacity: 0.6
           }).addTo(markersLayer);
 
-          marker.bindPopup(`<b>Suspect: ${site.name}</b><br>${site.distance} km away`);
-          
-          // Click marker to fly closer
-          marker.on('click', (e) => map.flyTo(e.latlng, 15));
+          marker.bindPopup(`<b>Suspect: ${site.name}</b><br>${site.distance} km away<br>AI Confidence: ${site.confidence || 'Calculating...'}`);
         });
       }
 
-      // Update Sidebar
+      // Update Sidebar Overview Card
       const overviewCard = document.querySelector('.rounded-2xl.bg-gradient-to-br');
       if (overviewCard) {
         overviewCard.innerHTML = `
@@ -186,36 +176,28 @@
           <p class="text-sm text-slate-700"><strong>Station:</strong> ${data.station}</p>
           <p class="text-sm text-slate-700"><strong>Status:</strong> ${data.isSpike ? 'Pollution Spike' : 'Normal'}</p>
           <p class="text-sm text-slate-700"><strong>PM Level:</strong> ${data.pm25} µg/m³</p>
-          <p class="text-sm text-slate-700"><strong>Suspects:</strong> ${data.suspects.length} nearby</p>
+          <p class="text-sm text-slate-700"><strong>Suspects:</strong> ${data.suspects ? data.suspects.length : 0} nearby</p>
         `;
       }
     } catch (error) {
       console.error("Map Update Error:", error);
     }
   }
-  // 4. CLICK MAP TO FLY TO LOCATION
-  map.on('click', (e) => {
-    map.flyTo(e.latlng, map.getZoom(), { duration: 1.0 });
-  });
-  // 5. DROP-DOWN LISTENER
+
+  // 4. DROP-DOWN LISTENER
   const stationSelect = document.getElementById("stationSelect");
   if (stationSelect) {
     stationSelect.addEventListener("change", (e) => {
-      // Map option values to original station names
-      const nameMap = {
-        "vyttila": "Vyttila Mobility Hub",
-        "kakkanad": "Kakkanad SmartCity",
-        "kaloor": "Kaloor Junction",
-        "edappally": "Edappally Toll",
-        "mg_road": "MG Road (Maharajas)"
-      };
-      updateMap(nameMap[e.target.value] || e.target.value);
+      // FIX: Use the value directly since it now matches scenarios.json
+      updateMap(e.target.value);
     });
   }
-  // 6. INITIAL LOAD
+
+  // 5. INITIAL LOAD
   window.onload = () => {
     const incidentData = JSON.parse(localStorage.getItem('activeIncident'));
-    if (incidentData) {
+    if (incidentData && incidentData.station) {
+      stationSelect.value = incidentData.station; // Sync dropdown
       updateMap(incidentData.station);
     } else {
       updateMap("Vyttila Mobility Hub");
