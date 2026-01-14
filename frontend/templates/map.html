@@ -34,14 +34,18 @@
       <div class="flex items-center gap-3 font-bold text-xl">
         <div
           class="w-10 h-10 bg-gradient-to-br from-blue-500 to-emerald-500 rounded-xl flex items-center justify-center text-white">
-          🌬️
+          <svg viewBox="0 0 24 24" class="w-6 h-6 text-white" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 12h10" />
+            <path d="M9 18h3a3 3 0 0 0 3-3V9a3 3 0 0 1 3-3h3" />
+            <path d="M12 12a3 3 0 0 1 3 3v3" />
+        </svg>
         </div>
-        Air Quality System
+        <span class="bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-700">Air Quality <span class="text-blue-600">System</span></span>
       </div>
 
       <nav class="flex gap-8 text-slate-600 font-medium">
         <a href="dashboard.html">Dashboard</a>
-        <a href="incident.html">Incident</a>
+        <!-- <a href="incident.html">Incident</a> -->
         <a href="map.html" class="text-blue-600 font-semibold">Map</a>
       </nav>
     </div>
@@ -185,13 +189,28 @@
   }
 
   // 4. DROP-DOWN LISTENER
-  const stationSelect = document.getElementById("stationSelect");
-  if (stationSelect) {
-    stationSelect.addEventListener("change", (e) => {
-      // FIX: Use the value directly since it now matches scenarios.json
-      updateMap(e.target.value);
-    });
-  }
+  // const stationSelect = document.getElementById("stationSelect");
+  // if (stationSelect) {
+  //   stationSelect.addEventListener("change", (e) => {
+  //     // FIX: Use the value directly since it now matches scenarios.json
+  //     updateMap(e.target.value);
+  //   });
+  // }
+
+  // 4. DROP-DOWN LISTENER
+const stationSelect = document.getElementById("stationSelect");
+if (stationSelect) {
+  stationSelect.addEventListener("change", (e) => {
+    const selectedStation = e.target.value;
+    
+    // --- ADD THIS LINE ---
+    // This saves the new station so suspected.html knows which one to load
+    localStorage.setItem('activeIncident', JSON.stringify({ station: selectedStation }));
+    // ---------------------
+
+    updateMap(selectedStation);
+  });
+}
 
   // 5. INITIAL LOAD
   window.onload = () => {
