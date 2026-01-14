@@ -25,6 +25,17 @@ function estimateAQI(pm25) {
     return Math.round(pm25 * 2);
 }
 
+// 1. Tell Express where your HTML files are (templates folder)
+app.use(express.static(path.join(__dirname, '..', 'frontend', 'templates')));
+
+// 2. Tell Express where your CSS/JS/Images are (frontend folder)
+app.use(express.static(path.join(__dirname, '..', 'frontend')));
+
+// 2. Route to serve the index.html specifically
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, '..', 'frontend', 'templates', 'index.html'));
+});
+
 // --- THE MAIN ROUTE ---
 app.get('/api/report', async (req, res) => {
     const requestedZone = req.query.zone || "Kakkanad SmartCity";
