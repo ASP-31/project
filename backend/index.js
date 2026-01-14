@@ -4,7 +4,7 @@ const cors = require('cors');
 const fs = require('fs');
 const path = require('path');
 const { getDistance } = require('./services/distance');
-
+const { scoreSuspect } = require('./services/aiScoring');
 const app = express();
 const PORT = 3000;
 
@@ -31,23 +31,38 @@ app.use(express.static(path.join(__dirname, '..', 'frontend', 'templates')));
 // 2. Tell Express where your CSS/JS/Images are (frontend folder)
 app.use(express.static(path.join(__dirname, '..', 'frontend')));
 
-// 2. Route to serve the index.html specifically
+// 2. Route to serve the dashboard.html specifically
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'frontend', 'templates', 'index.html'));
+    res.sendFile(path.join(__dirname, '..', 'frontend', 'templates', 'dashboard.html'));
 });
 
 // --- THE MAIN ROUTE ---
 app.get('/api/report', async (req, res) => {
-    const requestedZone = req.query.zone || "Kakkanad SmartCity";
-    // Find the scenario matching the dropdown choice
-    const scenario = scenarios.find(s => s.station.includes(requestedZone)) || scenarios[0];
-    let report;
+    // 1. Get the zone and trim any hidden spaces
+    const requestedZone = (req.query.zone || "").trim();
+    
+    // 2. SMART MATCHING: Case-insensitive and partial match
+    // This ensures "Kalamassery Startup Village" matches "Kalamassery Startup"
+    const scenario = scenarios.find(s => 
+        requestedZone.toLowerCase().includes(s.station.toLowerCase()) || 
+        s.station.toLowerCase().includes(requestedZone.toLowerCase())
+    );
+    
+    // 3. Fallback logic with logging for debugging
+    if (!scenario) {
+        console.log(`⚠️ No exact match for "${requestedZone}". Using default.`);
+        var activeScenario = scenarios[0]; 
+    } else {
+        console.log(`✅ Matched Request "${requestedZone}" to Scenario: ${scenario.station}`);
+        var activeScenario = scenario;
+    }
 
+    let report;
     try {
-        console.log(`📡 Trying API for ${requestedZone}...`);
+        // Try Live API first
         const response = await axios.get('https://api.openaq.org/v3/locations', {
             params: { 
-                coordinates: `${scenario.lat},${scenario.lng}`, 
+                coordinates: `${activeScenario.lat},${activeScenario.lng}`, 
                 radius: 10000, 
                 parameters_id: 2 
             },
@@ -61,46 +76,43 @@ app.get('/api/report', async (req, res) => {
 
         if (liveLoc) {
             const pmVal = liveLoc.sensors.find(s => s.parameter.id === 2).latest.value;
-            console.log("✅ API SUCCESS");
-            report = {
-                source: "LIVE_API",
-                station: liveLoc.name,
-                pm25: pmVal,
-                pm10: parseFloat((pmVal * 1.2).toFixed(2)),
-                aqi: estimateAQI(pmVal),
-                timestamp: new Date().toISOString(),
-                isSpike: pmVal > 60,
-                suspects: [] 
-            };
-        } else { 
-            throw new Error("No live sensors found in this zone"); 
-        }
+            report = generateReport("LIVE_API", activeScenario, pmVal);
+        } else { throw new Error("No live sensors"); }
 
     } catch (error) {
-        console.log(`⚠️ API Fail/No Data: Using Mock for ${requestedZone}`);
-        const curPM = applyJitter(scenario.base_pm25);
-        
-        report = {
-            source: "MOCK_DATA",
-            station: scenario.station,
-            pm25: curPM,
-            pm10: applyJitter(scenario.base_pm10),
-            aqi: estimateAQI(curPM),
-            timestamp: new Date().toISOString(),
-            isSpike: curPM > 60,
-            suspects: scenario.manual_suspects.map(sus => ({
-                ...sus,
-                distance: getDistance(scenario.lat, scenario.lng, sus.lat, sus.lng).toFixed(2)
-            }))
-        };
+        // Use Mock Data if API fails
+        const curPM = applyJitter(activeScenario.base_pm25);
+        report = generateReport("MOCK_DATA", activeScenario, curPM);
     }
-
-    // Save for the frontend to extract
-    // const dataDir = path.join(__dirname, 'data');
-    // if (!fs.existsSync(dataDir)) fs.mkdirSync(dataDir);
-    // fs.writeFileSync(path.join(dataDir, 'latest_report.json'), JSON.stringify(report, null, 2));
-
     res.json(report);
 });
 
-app.listen(PORT, () => console.log(`🚀 Server ready on http://localhost:${PORT}`));
+// Helper to keep code clean
+function generateReport(source, scenario, pmVal) {
+    return {
+        source: source,
+        station: scenario.station, // Returns the specific station name
+        pm25: pmVal,
+        pm10: applyJitter(scenario.base_pm10),
+        aqi: estimateAQI(pmVal),
+        timestamp: new Date().toISOString(),
+        isSpike: pmVal > 50,
+        // Map unique suspects for THIS specific scenario
+        suspects: scenario.manual_suspects.map(sus => {
+            const dist = getDistance(scenario.lat, scenario.lng, sus.lat, sus.lng);
+            const ai = scoreSuspect({ distance: dist, type: sus.type }, pmVal);
+            return { 
+                ...sus, 
+                distance: dist.toFixed(2),
+                aiScore: ai.score,
+                confidence: ai.confidence,
+                reasoning: ai.reasoning 
+            };
+        })
+    };
+}
+
+
+app.listen(PORT, () => {
+    console.log(`🚀 Server running on http://localhost:${PORT}`);
+});

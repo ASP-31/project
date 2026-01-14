@@ -38,7 +38,7 @@
 
       <nav class="flex gap-8 text-slate-600 font-medium">
         <a href="#" class="text-blue-600 font-semibold">Dashboard</a>
-        <a href="#" class="hover:text-blue-600">History</a>
+        <a href="history.html" class="hover:text-blue-600">History</a>
         <a href="map.html" class="hover:text-blue-600">Map</a>
       </nav>
     </div>
@@ -149,91 +149,94 @@
     const API_URL = 'http://localhost:3000/api/report';
 
     async function updateDashboard() {
-      const zoneSelect = document.getElementById("zoneSelector");
+        const zoneSelect = document.getElementById("zoneSelector");
+        if (!zoneSelect) return;
 
-      // Safety check to prevent "reading properties of null" errors
-      if (!zoneSelect) return;
+        const selectedZone = zoneSelect.value;
+        console.log("AI Analysis Request for:", selectedZone);
 
-      const selectedZone = zoneSelect.value;
-      console.log("Fetching data for:", selectedZone);
+        try {
+            // 1. Fetch data with the zone parameter
+            const response = await fetch(`${API_URL}?zone=${encodeURIComponent(selectedZone)}`);
+            if (!response.ok) throw new Error("Backend unreachable");
 
-      try {
-        // 1. Fetch data from backend
-        const response = await fetch(`${API_URL}?zone=${encodeURIComponent(selectedZone)}`);
-        if (!response.ok) throw new Error("Backend unreachable");
+            const data = await response.json();
+            console.log("AI Analysis Request for:", selectedZone);
+            console.log("AI Response Received:", data);
 
-        const data = await response.json();
-        console.log("Data received:", data);
+            // 2. Update UI Numerical Values
+            document.getElementById("pmValue").innerText = data.pm25 || 0;
+            document.getElementById("pm10Value").innerText = data.pm10 || 0;
+            document.getElementById("aqiValue").innerText = data.aqi || 0;
+            document.getElementById("stationName").innerText = data.station || "Unknown";
+            document.getElementById("lastUpdated").innerText = new Date(data.timestamp).toLocaleTimeString();
 
-        // 2. Update UI Numerical Values
-        // Using '||' ensures that if a key is missing, the dashboard shows '0' instead of breaking
-        document.getElementById("pmValue").innerText = data.pm25 || 0;
-        document.getElementById("pm10Value").innerText = data.pm10 || 0;
-        document.getElementById("aqiValue").innerText = data.aqi || 0;
-        document.getElementById("stationName").innerText = data.station || "Unknown";
-        document.getElementById("lastUpdated").innerText = new Date(data.timestamp).toLocaleTimeString();
+            // 3. UI Elements for Status Logic
+            const statusCard = document.getElementById("statusCard");
+            const statusText = document.getElementById("statusText");
+            const suspectSection = document.getElementById("suspectSection");
+            const tableBody = document.getElementById("suspectTableBody");
+            const incidentBtn = document.getElementById("incidentBtn");
 
-        // 3. Status and Alert UI Logic
-        const statusCard = document.getElementById("statusCard");
-        const statusText = document.getElementById("statusText");
-        const suspectSection = document.getElementById("suspectSection");
-        const tableBody = document.getElementById("suspectTableBody");
-        const incidentBtn = document.getElementById("incidentBtn");
+            if (data.isSpike) {
+                // ALERT STATE: High Pollution Detected
+                statusCard.className = "rounded-2xl p-6 border shadow-sm flex flex-col justify-between bg-red-50 border-red-400";
+                statusText.innerText = "POLLUTION SPIKE";
+                statusText.className = "text-2xl font-extrabold text-red-700";
 
-        if (data.isSpike) {
-          // Show Alert Styling
-          statusCard.className = "rounded-2xl p-6 border shadow-sm flex flex-col justify-between bg-red-50 border-red-400";
-          statusText.innerText = "ALERT";
-          statusText.className = "text-2xl font-extrabold text-red-700";
+                if (incidentBtn) incidentBtn.classList.remove("hidden");
+                if (suspectSection) suspectSection.classList.remove("hidden");
 
-          if (incidentBtn) incidentBtn.classList.remove("hidden");
-          if (suspectSection) suspectSection.classList.remove("hidden");
+                // Populate and Sort Table by AI Score
+                if (tableBody && data.suspects) {
+                    const sorted = data.suspects.sort((a, b) => b.aiScore - a.aiScore);
+                    tableBody.innerHTML = sorted.map(site => `
+                        <tr class="border-b border-slate-50 last:border-0 hover:bg-slate-50 transition">
+                            <td class="py-4 font-medium">
+                                ${site.name} 
+                                <span class="ml-2 px-2 py-0.5 text-[10px] rounded-full bg-slate-100 text-slate-500 font-bold uppercase">
+                                    ${site.confidence}
+                                </span>
+                            </td>
+                            <td class="py-4 text-slate-600 text-sm">${site.type}</td>
+                            <td class="py-4 text-blue-600 font-bold">${site.distance} km</td>
+                        </tr>
+                    `).join('');
+                }
 
-          // Populate Suspect Table if data exists
-          if (tableBody && data.suspects) {
-            tableBody.innerHTML = data.suspects.map(site => `
-            <tr class="border-b border-slate-50 last:border-0 hover:bg-slate-50 transition">
-              <td class="py-4 font-medium">${site.name}</td>
-              <td class="py-4 text-slate-600 text-sm">${site.type || 'Construction'}</td>
-              <td class="py-4 text-blue-600 font-semibold">${site.distance} km</td>
-            </tr>
-          `).join('');
-          }
+                // Store data for AI suspected page
+                if (incidentBtn) {
+                    incidentBtn.onclick = () => {
+                        localStorage.setItem('activeIncident', JSON.stringify(data));
+                        window.location.href = 'suspected.html'; 
+                    };
+                }
 
-          // Set up Map page redirection
-          if (incidentBtn) {
-            incidentBtn.onclick = () => {
-              localStorage.setItem('activeIncident', JSON.stringify(data));
-              window.location.href = 'map.html';
-            };
-          }
-        } else {
-          // Show Normal Styling
-          statusCard.className = "rounded-2xl p-6 border shadow-sm flex flex-col justify-between bg-emerald-50 border-emerald-400";
-          statusText.innerText = "NORMAL";
-          statusText.className = "text-2xl font-extrabold text-emerald-700";
+            } else {
+                // NORMAL STATE: Air Quality within limits
+                statusCard.className = "rounded-2xl p-6 border shadow-sm flex flex-col justify-between bg-emerald-50 border-emerald-400";
+                statusText.innerText = "NORMAL";
+                statusText.className = "text-2xl font-extrabold text-emerald-700";
 
-          if (incidentBtn) incidentBtn.classList.add("hidden");
-          if (suspectSection) suspectSection.classList.add("hidden");
+                if (incidentBtn) incidentBtn.classList.add("hidden");
+                if (suspectSection) suspectSection.classList.add("hidden");
+            }
+
+        } catch (error) {
+            console.error("Dashboard Error:", error);
+            const statusText = document.getElementById("statusText");
+            if (statusText) statusText.innerText = "OFFLINE";
         }
-
-      } catch (error) {
-        console.error("Dashboard Update Failed:", error);
-        const statusText = document.getElementById("statusText");
-        if (statusText) statusText.innerText = "OFFLINE";
-      }
     }
 
-    // Ensure the DOM is fully ready before attaching events
     document.addEventListener('DOMContentLoaded', () => {
-      const zoneSelect = document.getElementById("zoneSelector");
-      if (zoneSelect) {
-        zoneSelect.addEventListener('change', updateDashboard);
-        // Run once on load to show initial data
-        updateDashboard();
-      }
+        const zoneSelect = document.getElementById("zoneSelector");
+        if (zoneSelect) {
+            zoneSelect.addEventListener('change', updateDashboard);
+            updateDashboard(); // Initial load
+        }
     });
-  </script>
+</script>
 </body>
 
 </html>

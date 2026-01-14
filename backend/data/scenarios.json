@@ -11,6 +11,7 @@
       { "name": "Metro Extension P320", "type": "Infrastructure", "lat": 9.9655, "lng": 76.3185 },
       { "name": "Thykoodam Bridge Repair", "type": "Roadwork", "lat": 9.9580, "lng": 76.3150 },
       { "name": "Janatha Road Paving", "type": "Roadwork", "lat": 9.9710, "lng": 76.3240 },
+      { "name": "Chemical Depot", "type": "Industrial", "lat": 10.0430, "lng": 76.2920 },
       { "name": "Vyttila Auto Stand Renovation", "type": "Commercial", "lat": 9.9680, "lng": 76.3220 },
       { "name": "Power House Site", "type": "Utility", "lat": 9.9620, "lng": 76.3260 },
       { "name": "Kaniyampuzha Dredging", "type": "Waterway", "lat": 9.9640, "lng": 76.3300 },
@@ -92,7 +93,7 @@
   },
   {
     "id": "EKM_06",
-    "station": "Eloor Industrial",
+    "station": "Eloor Industrial Area",
     "base_pm25": 110.5, "base_pm10": 155.0,
     "lat": 10.0450, "lng": 76.2950,
     "manual_suspects": [
@@ -126,12 +127,13 @@
     ]
   },
   {
-    "id": "EKM_08", "station": "Kalamassery Startup",
+    "id": "EKM_08", "station": "Kalamassery Startup Village",
     "base_pm25": 42.0, "base_pm10": 60.5,
     "lat": 10.0520, "lng": 76.3250,
     "manual_suspects": [
       { "name": "Digital Science Park", "type": "Commercial", "lat": 10.0540, "lng": 76.3270 },
       { "name": "University Lab Site", "type": "Educational", "lat": 10.0500, "lng": 76.3230 },
+      
       { "name": "Cochin Medical Ext", "type": "Healthcare", "lat": 10.0600, "lng": 76.3350 },
       { "name": "Kinfra Park Wall", "type": "Industrial", "lat": 10.0550, "lng": 76.3200 },
       { "name": "HMT Pipe Restoration", "type": "Utility", "lat": 10.0580, "lng": 76.3180 },

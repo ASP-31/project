@@ -140,7 +140,7 @@
   // 3. FETCH DATA & FLY TO LOCATION
   async function updateMap(stationName) {
     try {
-      const response = await fetch(`http://localhost:3000/api/report?zone=${encodeURIComponent(stationName)}`);
+      const response = await fetch(`https://localhost:3000/api/report?zone=${encodeURIComponent(stationName)}`);
       const data = await response.json();
 
       markersLayer.clearLayers();
