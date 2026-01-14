@@ -33,7 +33,7 @@
 
     <nav class="flex gap-8 text-slate-600 font-medium">
       <a href="dashboard.html">Dashboard</a>
-      <a href="incident.html">Incident</a>
+      <!-- <a href="incident.html">Incident</a> -->
       <a href="map.html">Map</a>
       <a class="text-blue-600 font-semibold">Suspected Sources</a>
     </nav>
@@ -54,92 +54,46 @@
   </section>
 
   <!-- SUSPECTED SITES -->
-  <section class="grid md:grid-cols-2 gap-6">
+<section id="suspectsContainer" class="grid md:grid-cols-2 gap-6">
 
-    <!-- CARD 1 -->
-    <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 hover:shadow-lg transition">
-      <div class="flex justify-between items-start">
-        <h2 class="text-lg font-bold">Vyttila Mobility Hub Extension</h2>
-        <span class="px-3 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-700">
-          High Confidence
-        </span>
-      </div>
+</section>
 
-      <p class="text-sm text-slate-500 mt-1">Distance: 0.16 km from station</p>
 
-      <div class="mt-4 space-y-3 text-sm text-slate-700">
-        <p><strong>AI Reasoning:</strong>  
-          Significant PM spike coincides with peak traffic inflow and diesel bus activity.
-        </p>
-        <p><strong>Wind Correlation:</strong>  
-          South-westerly winds align directly from this site toward the monitoring station.
-        </p>
-        <p><strong>Historical Pattern:</strong>  
-          Similar spikes detected on weekdays between 8–10 AM.
-        </p>
-      </div>
-    </div>
-
-    <!-- CARD 2 -->
-    <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 hover:shadow-lg transition">
-      <div class="flex justify-between items-start">
-        <h2 class="text-lg font-bold">Kochi Metro – Chembumukku</h2>
-        <span class="px-3 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-700">
-          Medium Confidence
-        </span>
-      </div>
-
-      <p class="text-sm text-slate-500 mt-1">Distance: 4.62 km from station</p>
-
-      <div class="mt-4 space-y-3 text-sm text-slate-700">
-        <p><strong>AI Reasoning:</strong>  
-          Elevated particulate emissions observed during maintenance operations.
-        </p>
-        <p><strong>Wind Correlation:</strong>  
-          Partial alignment with wind direction during incident timeframe.
-        </p>
-        <p><strong>Historical Pattern:</strong>  
-          Occasional contribution during infrastructure activity days.
-        </p>
-      </div>
-    </div>
-
-    <!-- CARD 3 -->
-    <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 hover:shadow-lg transition">
-      <div class="flex justify-between items-start">
-        <h2 class="text-lg font-bold">Kakkanad SmartCity – P3</h2>
-        <span class="px-3 py-1 text-xs font-semibold rounded-full bg-slate-200 text-slate-700">
-          Low Confidence
-        </span>
-      </div>
-
-      <p class="text-sm text-slate-500 mt-1">Distance: 6.52 km from station</p>
-
-      <div class="mt-4 space-y-3 text-sm text-slate-700">
-        <p><strong>AI Reasoning:</strong>  
-          Minor contribution possible due to construction-related dust.
-        </p>
-        <p><strong>Wind Correlation:</strong>  
-          Weak wind alignment at the time of the spike.
-        </p>
-        <p><strong>Historical Pattern:</strong>  
-          Low correlation with previous incidents.
-        </p>
-      </div>
-    </div>
-
-  </section>
 
   <!-- AI SUMMARY -->
-  <section class="bg-gradient-to-br from-blue-50 to-white border border-blue-200 rounded-2xl p-6">
-    <h3 class="text-lg font-bold text-blue-700 mb-2">AI Summary</h3>
-    <p class="text-sm text-slate-700 max-w-4xl">
-      The system assigns higher confidence to sites with stronger temporal alignment,
-      closer proximity, and favorable wind vectors. Vyttila Mobility Hub Extension
-      exhibits the strongest multi-factor correlation and is identified as the
-      primary probable source.
-    </p>
-  </section>
+  <section id="aiSummary"
+  class="relative bg-gradient-to-br from-blue-50 via-white to-emerald-50
+         border-2 border-blue-300 rounded-2xl p-6 shadow-lg">
+
+  <!-- AI badge -->
+  <div class="absolute -top-3 left-6 bg-gradient-to-r from-blue-600 to-emerald-600
+              text-white text-xs font-bold px-4 py-1 rounded-full shadow">
+    AI VERDICT
+  </div>
+
+  <div class="flex items-start gap-4">
+    <!-- Icon -->
+    <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-emerald-500
+                flex items-center justify-center text-white shadow-md">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none"
+           viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round"
+              d="M9.663 17h4.673M12 3v1m6.364 1.636-.707.707M21 12h-1M4 12H3m2.343-5.657-.707-.707M6.343 17.657l-.707.707M18 18l-.707-.707M12 21v-1" />
+      </svg>
+    </div>
+
+    <!-- Text -->
+    <div>
+      <h3 class="text-xl font-extrabold text-slate-900 mb-2">
+        AI Summary & Conclusion
+      </h3>
+      <p id="aiSummaryText" class="text-sm text-slate-700 leading-relaxed max-w-4xl">
+        Generating AI Summary...
+      </p>
+    </div>
+  </div>
+</section>
+
 
   <!-- ACTION -->
   <section class="flex justify-end">
@@ -158,6 +112,77 @@
     © 2026 Ernakulam Air Quality Project
   </div>
 </footer>
+  <script>
+document.addEventListener("DOMContentLoaded", async () => {
+  try {
+    const savedData = localStorage.getItem('activeIncident');
+    let zone = "Vyttila Mobility Hub"; // Fallback default
+
+    if (savedData) {
+      const incidentData = JSON.parse(savedData);
+      zone = incidentData.station || incidentData.zone || zone;
+    }
+    const res = await fetch(`http://localhost:3000/api/report?zone=${encodeURIComponent(zone)}`);
+    const data = await res.json();
+
+    const container = document.getElementById("suspectsContainer");
+    container.innerHTML = "";
+
+    data.suspects.forEach(suspect => {
+      // Badge color based on confidence
+      let badgeColor = "bg-slate-200 text-slate-700";
+      if (suspect.confidence === "High") badgeColor = "bg-red-100 text-red-700";
+      if (suspect.confidence === "Medium") badgeColor = "bg-yellow-100 text-yellow-700";
+
+      const card = `
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 hover:shadow-lg transition">
+          <div class="flex justify-between items-start">
+            <h2 class="text-lg font-bold">${suspect.name}</h2>
+            <span class="px-3 py-1 text-xs font-semibold rounded-full ${badgeColor}">
+              ${suspect.confidence} Confidence
+            </span>
+          </div>
+
+          <p class="text-sm text-slate-500 mt-1">
+            Distance: ${suspect.distance} km • Type: ${suspect.type}
+          </p>
+
+          <div class="mt-4 space-y-2 text-sm text-slate-700">
+            <p><strong>AI Score:</strong> ${suspect.aiScore}/100</p>
+            <p><strong>AI Reasoning:</strong></p>
+            <ul class="list-disc ml-5 text-slate-600">
+              ${suspect.reasoning.map(r => `<li>${r}</li>`).join("")}
+            </ul>
+          </div>
+        </div>
+      `;
+
+      container.insertAdjacentHTML("beforeend", card);
+      // Generate AI summary
+const highConfidence = data.suspects.filter(s => s.confidence === "High");
+
+if (highConfidence.length > 0) {
+  const primary = highConfidence.sort((a, b) => b.aiScore - a.aiScore)[0];
+
+  document.getElementById("aiSummaryText").innerText =
+    `The system identified ${highConfidence.length} high-confidence pollution sources.
+     ${primary.name} is the most probable contributor due to its close proximity
+     (${primary.distance} km) and activity type (${primary.type}).
+     This conclusion is derived from spatial correlation and elevated PM levels.`;
+} else {
+  document.getElementById("aiSummaryText").innerText =
+    "No high-confidence pollution sources were identified for this incident.The pollution spike may be due to distributed or transient factors.";
+}
+
+    });
+
+  } catch (err) {
+    console.error("Error loading suspects:", err);
+  }
+});
+
+</script>
+
 
 </body>
 </html>
