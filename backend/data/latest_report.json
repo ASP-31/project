@@ -1,26 +1,32 @@
 {
-  "timestamp": "2026-01-12T09:51:47.542Z",
-  "pmValue": 84.5,
-  "station": "Vyttila Station (Simulated)",
+  "source": "MOCK_DATA",
+  "station": "Kakkanad SmartCity",
+  "pm25": 142.38,
+  "pm10": 194.23,
+  "aqi": 285,
+  "timestamp": "2026-01-14T11:46:21.476Z",
   "isSpike": true,
   "suspects": [
     {
-      "name": "Vyttila Mobility Hub Ext",
-      "lat": 9.967,
-      "lng": 76.32,
-      "distance": 0.16
+      "name": "Sands Infinit Tech Park",
+      "type": "Commercial",
+      "lat": 10.009,
+      "lng": 76.363,
+      "distance": "0.12"
     },
     {
-      "name": "Kochi Metro - Chembumukku",
-      "lat": 10.0075,
-      "lng": 76.3195,
-      "distance": 4.62
+      "name": "SmartCity internal roadwork",
+      "type": "Roadwork",
+      "lat": 10.007,
+      "lng": 76.36,
+      "distance": "0.28"
     },
     {
-      "name": "Kakkanad SmartCity P3",
-      "lat": 10.0085,
-      "lng": 76.362,
-      "distance": 6.52
+      "name": "Prestige Cyber Green P2",
+      "type": "Commercial",
+      "lat": 10.0105,
+      "lng": 76.365,
+      "distance": "0.40"
     }
   ]
 }
