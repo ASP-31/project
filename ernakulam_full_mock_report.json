@@ -1,0 +1,622 @@
+{
+  "timestamp": "2026-01-14T11:43:37.295534Z",
+  "district": "Ernakulam",
+  "reports": [
+    {
+      "station": "Vyttila Station (Simulated)",
+      "lat": 9.967,
+      "lng": 76.319,
+      "pmValue": 84.5,
+      "pollutants": {
+        "pm25": 84.5,
+        "pm10": 132.2
+      },
+      "aqi": {
+        "value": 151,
+        "status": "Alert"
+      },
+      "isSpike": true,
+      "suspects": [
+        {
+          "name": "Vyttila Mobility Hub Ext",
+          "lat": 9.967,
+          "lng": 76.32,
+          "distance": 0.16
+        },
+        {
+          "name": "NH-66 Flyover Expansion",
+          "lat": 9.97,
+          "lng": 76.325,
+          "distance": 0.68
+        },
+        {
+          "name": "Kundannoor Junction Works",
+          "lat": 9.963,
+          "lng": 76.33,
+          "distance": 1.42
+        },
+        {
+          "name": "SA Road Metro Works",
+          "lat": 9.965,
+          "lng": 76.312,
+          "distance": 0.9
+        },
+        {
+          "name": "Vyttila Canal Reclamation",
+          "lat": 9.958,
+          "lng": 76.318,
+          "distance": 1.1
+        },
+        {
+          "name": "Panampilly Infra Redev",
+          "lat": 9.968,
+          "lng": 76.307,
+          "distance": 1.3
+        },
+        {
+          "name": "Thykoodam Bridge Repairs",
+          "lat": 9.961,
+          "lng": 76.322,
+          "distance": 0.8
+        },
+        {
+          "name": "Metro Phase II Yard",
+          "lat": 9.971,
+          "lng": 76.328,
+          "distance": 1.6
+        },
+        {
+          "name": "SA Road Drain Works",
+          "lat": 9.964,
+          "lng": 76.315,
+          "distance": 0.7
+        },
+        {
+          "name": "Vyttila Bypass Service Rd",
+          "lat": 9.969,
+          "lng": 76.334,
+          "distance": 1.9
+        }
+      ]
+    },
+    {
+      "station": "Edappally Station (Simulated)",
+      "lat": 10.025,
+      "lng": 76.308,
+      "pmValue": 92.1,
+      "pollutants": {
+        "pm25": 92.1,
+        "pm10": 148.6
+      },
+      "aqi": {
+        "value": 165,
+        "status": "Alert"
+      },
+      "isSpike": true,
+      "suspects": [
+        {
+          "name": "Edappally Flyover Phase II",
+          "lat": 10.027,
+          "lng": 76.31,
+          "distance": 0.3
+        },
+        {
+          "name": "NH-544 Road Widening",
+          "lat": 10.03,
+          "lng": 76.312,
+          "distance": 0.6
+        },
+        {
+          "name": "Lulu Mall Service Rd",
+          "lat": 10.026,
+          "lng": 76.304,
+          "distance": 0.45
+        },
+        {
+          "name": "Changampuzha Park Redev",
+          "lat": 10.029,
+          "lng": 76.299,
+          "distance": 1.2
+        },
+        {
+          "name": "Koonamthai Bridge Works",
+          "lat": 10.02,
+          "lng": 76.315,
+          "distance": 1.0
+        },
+        {
+          "name": "Pipeline Rd Drainage",
+          "lat": 10.023,
+          "lng": 76.307,
+          "distance": 0.4
+        },
+        {
+          "name": "Edappally Toll Revamp",
+          "lat": 10.031,
+          "lng": 76.318,
+          "distance": 1.5
+        },
+        {
+          "name": "Metro Extension Works",
+          "lat": 10.024,
+          "lng": 76.311,
+          "distance": 0.5
+        },
+        {
+          "name": "Residential High-rise Cluster",
+          "lat": 10.028,
+          "lng": 76.302,
+          "distance": 0.9
+        },
+        {
+          "name": "Edappally Canal Works",
+          "lat": 10.019,
+          "lng": 76.306,
+          "distance": 0.8
+        }
+      ]
+    },
+    {
+      "station": "Kakkanad Station (Simulated)",
+      "lat": 10.015,
+      "lng": 76.342,
+      "pmValue": 78.3,
+      "pollutants": {
+        "pm25": 78.3,
+        "pm10": 121.4
+      },
+      "aqi": {
+        "value": 142,
+        "status": "Moderate"
+      },
+      "isSpike": true,
+      "suspects": [
+        {
+          "name": "SmartCity Phase III",
+          "lat": 10.008,
+          "lng": 76.362,
+          "distance": 2.2
+        },
+        {
+          "name": "Infopark Expressway Works",
+          "lat": 10.012,
+          "lng": 76.356,
+          "distance": 1.6
+        },
+        {
+          "name": "Collectorate Building Ext",
+          "lat": 10.017,
+          "lng": 76.337,
+          "distance": 0.7
+        },
+        {
+          "name": "Seaport-Airport Rd Phase II",
+          "lat": 10.02,
+          "lng": 76.35,
+          "distance": 1.1
+        },
+        {
+          "name": "Kakkanad Junction Flyover",
+          "lat": 10.015,
+          "lng": 76.345,
+          "distance": 0.4
+        },
+        {
+          "name": "Civil Station Drain Works",
+          "lat": 10.018,
+          "lng": 76.341,
+          "distance": 0.5
+        },
+        {
+          "name": "Rajagiri Valley Housing",
+          "lat": 10.022,
+          "lng": 76.348,
+          "distance": 1.0
+        },
+        {
+          "name": "Water Metro Terminal Works",
+          "lat": 10.01,
+          "lng": 76.332,
+          "distance": 1.3
+        },
+        {
+          "name": "IT Park Utility Expansion",
+          "lat": 10.006,
+          "lng": 76.358,
+          "distance": 2.5
+        },
+        {
+          "name": "Kakkanad Canal Desilting",
+          "lat": 10.014,
+          "lng": 76.339,
+          "distance": 0.6
+        }
+      ]
+    },
+    {
+      "station": "Aluva Station (Simulated)",
+      "lat": 10.109,
+      "lng": 76.351,
+      "pmValue": 71.6,
+      "pollutants": {
+        "pm25": 71.6,
+        "pm10": 110.8
+      },
+      "aqi": {
+        "value": 135,
+        "status": "Moderate"
+      },
+      "isSpike": true,
+      "suspects": [
+        {
+          "name": "Aluva Metro Yard",
+          "lat": 10.105,
+          "lng": 76.353,
+          "distance": 0.6
+        },
+        {
+          "name": "NH-544 Flyover Works",
+          "lat": 10.112,
+          "lng": 76.356,
+          "distance": 0.8
+        },
+        {
+          "name": "Periyar Bank Protection",
+          "lat": 10.108,
+          "lng": 76.346,
+          "distance": 0.5
+        },
+        {
+          "name": "UC College Rd Expansion",
+          "lat": 10.114,
+          "lng": 76.349,
+          "distance": 0.7
+        },
+        {
+          "name": "Aluva Bus Stand Redev",
+          "lat": 10.11,
+          "lng": 76.352,
+          "distance": 0.3
+        },
+        {
+          "name": "Airport Access Rd Works",
+          "lat": 10.101,
+          "lng": 76.36,
+          "distance": 1.4
+        },
+        {
+          "name": "Industrial Drain Upgrade",
+          "lat": 10.118,
+          "lng": 76.347,
+          "distance": 1.1
+        },
+        {
+          "name": "River Bridge Strengthening",
+          "lat": 10.107,
+          "lng": 76.357,
+          "distance": 0.9
+        },
+        {
+          "name": "Town Hall Complex",
+          "lat": 10.113,
+          "lng": 76.345,
+          "distance": 0.8
+        },
+        {
+          "name": "Aluva Market Area Works",
+          "lat": 10.106,
+          "lng": 76.348,
+          "distance": 0.4
+        }
+      ]
+    },
+    {
+      "station": "Kalamassery Station (Simulated)",
+      "lat": 10.055,
+      "lng": 76.314,
+      "pmValue": 88.9,
+      "pollutants": {
+        "pm25": 88.9,
+        "pm10": 139.7
+      },
+      "aqi": {
+        "value": 158,
+        "status": "Alert"
+      },
+      "isSpike": true,
+      "suspects": [
+        {
+          "name": "FACT Industrial Expansion",
+          "lat": 10.058,
+          "lng": 76.318,
+          "distance": 0.6
+        },
+        {
+          "name": "CUSAT Hostels Phase II",
+          "lat": 10.05,
+          "lng": 76.321,
+          "distance": 0.8
+        },
+        {
+          "name": "NH-544 Service Road",
+          "lat": 10.057,
+          "lng": 76.31,
+          "distance": 0.5
+        },
+        {
+          "name": "Metro Phase II Works",
+          "lat": 10.053,
+          "lng": 76.317,
+          "distance": 0.4
+        },
+        {
+          "name": "Industrial Drain Works",
+          "lat": 10.06,
+          "lng": 76.309,
+          "distance": 0.9
+        },
+        {
+          "name": "Kalamassery Junction Flyover",
+          "lat": 10.056,
+          "lng": 76.315,
+          "distance": 0.2
+        },
+        {
+          "name": "FACT Rd Expansion",
+          "lat": 10.052,
+          "lng": 76.306,
+          "distance": 1.0
+        },
+        {
+          "name": "Residential Tower Cluster",
+          "lat": 10.048,
+          "lng": 76.319,
+          "distance": 1.1
+        },
+        {
+          "name": "Railway Yard Works",
+          "lat": 10.061,
+          "lng": 76.313,
+          "distance": 0.7
+        },
+        {
+          "name": "Market Area Redev",
+          "lat": 10.054,
+          "lng": 76.311,
+          "distance": 0.3
+        }
+      ]
+    },
+    {
+      "station": "Fort Kochi Station (Simulated)",
+      "lat": 9.966,
+      "lng": 76.242,
+      "pmValue": 69.4,
+      "pollutants": {
+        "pm25": 69.4,
+        "pm10": 104.2
+      },
+      "aqi": {
+        "value": 128,
+        "status": "Moderate"
+      },
+      "isSpike": true,
+      "suspects": [
+        {
+          "name": "Beach Walkway Redev",
+          "lat": 9.968,
+          "lng": 76.244,
+          "distance": 0.3
+        },
+        {
+          "name": "Heritage Building Restoration",
+          "lat": 9.965,
+          "lng": 76.24,
+          "distance": 0.2
+        },
+        {
+          "name": "Water Metro Terminal",
+          "lat": 9.963,
+          "lng": 76.246,
+          "distance": 0.6
+        },
+        {
+          "name": "Drainage Upgrade Project",
+          "lat": 9.97,
+          "lng": 76.238,
+          "distance": 0.7
+        },
+        {
+          "name": "Jetty Expansion Works",
+          "lat": 9.964,
+          "lng": 76.248,
+          "distance": 0.8
+        },
+        {
+          "name": "Road Stone Paving",
+          "lat": 9.969,
+          "lng": 76.241,
+          "distance": 0.4
+        },
+        {
+          "name": "Old Port Area Repairs",
+          "lat": 9.962,
+          "lng": 76.243,
+          "distance": 0.5
+        },
+        {
+          "name": "Museum Annex Construction",
+          "lat": 9.967,
+          "lng": 76.239,
+          "distance": 0.4
+        },
+        {
+          "name": "Parking Area Redev",
+          "lat": 9.971,
+          "lng": 76.245,
+          "distance": 0.9
+        },
+        {
+          "name": "Fort Kochi Canal Works",
+          "lat": 9.968,
+          "lng": 76.236,
+          "distance": 0.8
+        }
+      ]
+    },
+    {
+      "station": "Tripunithura Station (Simulated)",
+      "lat": 9.95,
+      "lng": 76.345,
+      "pmValue": 73.2,
+      "pollutants": {
+        "pm25": 73.2,
+        "pm10": 115.6
+      },
+      "aqi": {
+        "value": 136,
+        "status": "Moderate"
+      },
+      "isSpike": true,
+      "suspects": [
+        {
+          "name": "SN Junction Flyover",
+          "lat": 9.951,
+          "lng": 76.347,
+          "distance": 0.3
+        },
+        {
+          "name": "Railway Station Redev",
+          "lat": 9.948,
+          "lng": 76.349,
+          "distance": 0.6
+        },
+        {
+          "name": "Hill Palace Rd Works",
+          "lat": 9.954,
+          "lng": 76.343,
+          "distance": 0.5
+        },
+        {
+          "name": "Temple Tank Restoration",
+          "lat": 9.946,
+          "lng": 76.341,
+          "distance": 0.7
+        },
+        {
+          "name": "Tripunithura Metro Ext",
+          "lat": 9.949,
+          "lng": 76.352,
+          "distance": 0.9
+        },
+        {
+          "name": "Drainage Modernization",
+          "lat": 9.952,
+          "lng": 76.339,
+          "distance": 0.8
+        },
+        {
+          "name": "Market Area Expansion",
+          "lat": 9.947,
+          "lng": 76.344,
+          "distance": 0.4
+        },
+        {
+          "name": "Bus Stand Redev",
+          "lat": 9.953,
+          "lng": 76.346,
+          "distance": 0.3
+        },
+        {
+          "name": "Canal Desilting Works",
+          "lat": 9.945,
+          "lng": 76.348,
+          "distance": 0.7
+        },
+        {
+          "name": "Residential Complex Phase II",
+          "lat": 9.956,
+          "lng": 76.351,
+          "distance": 1.0
+        }
+      ]
+    },
+    {
+      "station": "North Paravur Station (Simulated)",
+      "lat": 10.143,
+      "lng": 76.233,
+      "pmValue": 67.8,
+      "pollutants": {
+        "pm25": 67.8,
+        "pm10": 102.3
+      },
+      "aqi": {
+        "value": 124,
+        "status": "Moderate"
+      },
+      "isSpike": true,
+      "suspects": [
+        {
+          "name": "NH-66 Bypass Works",
+          "lat": 10.145,
+          "lng": 76.238,
+          "distance": 0.7
+        },
+        {
+          "name": "Town Center Redev",
+          "lat": 10.142,
+          "lng": 76.231,
+          "distance": 0.3
+        },
+        {
+          "name": "Bridge Strengthening",
+          "lat": 10.147,
+          "lng": 76.229,
+          "distance": 0.8
+        },
+        {
+          "name": "Market Yard Expansion",
+          "lat": 10.14,
+          "lng": 76.235,
+          "distance": 0.4
+        },
+        {
+          "name": "Canal Desilting",
+          "lat": 10.139,
+          "lng": 76.228,
+          "distance": 0.9
+        },
+        {
+          "name": "Drainage Upgrade",
+          "lat": 10.144,
+          "lng": 76.226,
+          "distance": 0.8
+        },
+        {
+          "name": "Bus Stand Redev",
+          "lat": 10.141,
+          "lng": 76.237,
+          "distance": 0.5
+        },
+        {
+          "name": "Riverbank Protection",
+          "lat": 10.148,
+          "lng": 76.234,
+          "distance": 0.6
+        },
+        {
+          "name": "Residential Layout Phase II",
+          "lat": 10.146,
+          "lng": 76.24,
+          "distance": 1.0
+        },
+        {
+          "name": "Warehouse Construction",
+          "lat": 10.138,
+          "lng": 76.232,
+          "distance": 0.5
+        }
+      ]
+    }
+  ]
+}
