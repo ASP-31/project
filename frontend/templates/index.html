@@ -58,11 +58,11 @@
     </p>
 
     <div class="mt-10 flex justify-center gap-4 flex-wrap">
-      <button class="flex items-center gap-2 bg-blue-600 text-white px-8 py-4 rounded-xl font-semibold shadow-md hover:bg-blue-700 transition">
+      <button id="dashboard-btn" class="flex items-center gap-2 bg-blue-600 text-white px-8 py-4 rounded-xl font-semibold shadow-md hover:bg-blue-700 transition">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 002 2h2a2 2 0 002-2" /></svg>
         Go to Dashboard
       </button>
-      <button class="flex items-center gap-2 border border-slate-300 bg-white px-8 py-4 rounded-xl font-semibold hover:bg-slate-200 transition">
+      <button id="map-btn" class="flex items-center gap-2 border border-slate-300 bg-white px-8 py-4 rounded-xl font-semibold hover:bg-slate-200 transition">
         <svg class="w-5 h-5 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
         View Map
       </button>
@@ -223,6 +223,17 @@
     © 2026 Ernakulam Air Quality Project. All rights reserved.
   </div>
 </footer>
+<script>
+  db_btn = document.getElementById('dashboard-btn')
+  map_btn = document.getElementById('map-btn')
 
+  db_btn.addEventListener("click",()=>{
+    window.location.href = 'dashboard.html'
+  })
+  map_btn.addEventListener("click",()=>{
+    window.location.href = 'map.html'
+  })
+
+</script>
 </body>
 </html>
