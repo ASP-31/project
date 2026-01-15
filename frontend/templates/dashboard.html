@@ -147,6 +147,8 @@
     </div>
   </footer>
 
+  <script src="services/storage.js"></script>
+
   <script>
     const API_URL = 'http://localhost:3000/api/report';
 
@@ -251,9 +253,11 @@
 
         // Action Persistence
         incidentBtn.onclick = () => {
-          localStorage.setItem('activeIncident', JSON.stringify(data));
-          window.location.href = 'map.html'; // Goes to log view
+          StorageService.saveToHistory(data);
+          StorageService.setActiveIncident(data);
+          window.location.href = 'incident.html';
         };
+
 
       } catch (e) {
         console.error("API Connection Error:", e);
@@ -267,6 +271,7 @@
       populateZones();
     });
   </script>
+
 </body>
 
 </html>

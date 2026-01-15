@@ -22,13 +22,15 @@
   <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
     <div class="flex items-center gap-3 font-bold text-xl">
       <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-emerald-500 rounded-xl flex items-center justify-center text-white">
-        <svg viewBox="0 0 24 24" class="w-6 h-6 text-white" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M2 12h10" />
-            <path d="M9 18h3a3 3 0 0 0 3-3V9a3 3 0 0 1 3-3h3" />
-            <path d="M12 12a3 3 0 0 1 3 3v3" />
+        <svg viewBox="0 0 24 24" class="w-6 h-6 text-white" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path d="M2 12h10" />
+          <path d="M9 18h3a3 3 0 0 0 3-3V9a3 3 0 0 1 3-3h3" />
+          <path d="M12 12a3 3 0 0 1 3 3v3" />
         </svg>
       </div>
-      <span class="bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-700">Air Quality <span class="text-blue-600">System</span></span>
+      <span class="bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-700">
+        Air Quality <span class="text-blue-600">System</span>
+      </span>
     </div>
 
     <nav class="flex gap-8 text-slate-600 font-medium">
@@ -48,7 +50,7 @@
     <div>
       <h1 class="text-3xl font-extrabold">Incident History</h1>
       <p class="text-slate-600 text-sm">
-        Previously viewed pollution incidents
+        Pollution incidents investigated by the user
       </p>
     </div>
 
@@ -90,12 +92,15 @@
   </div>
 </footer>
 
+<!-- STORAGE SERVICE -->
+<script src="services/storage.js"></script>
+
 <!-- SCRIPT -->
 <script>
   const table = document.getElementById('historyTable');
   const emptyState = document.getElementById('emptyState');
 
-  let history = JSON.parse(localStorage.getItem('incidentHistory')) || [];
+  let history = StorageService.getHistory();
 
   function severityFromAQI(aqi) {
     if (aqi > 200) return 'Severe';
@@ -139,20 +144,20 @@
   }
 
   function deleteIncident(index) {
-    history.splice(index, 1);
-    localStorage.setItem('incidentHistory', JSON.stringify(history));
+    StorageService.deleteFromHistory(index);
+    history = StorageService.getHistory();
     renderHistory();
   }
 
   function clearHistory() {
     if (!confirm('Are you sure you want to clear all history?')) return;
-    localStorage.removeItem('incidentHistory');
+    StorageService.clearHistory();
     history = [];
     renderHistory();
   }
 
   function viewIncident(index) {
-    localStorage.setItem('incidentReport', JSON.stringify(history[index]));
+    StorageService.setActiveIncident(history[index]);
     window.location.href = 'incident.html';
   }
 
@@ -161,3 +166,5 @@
 
 </body>
 </html>
+
+

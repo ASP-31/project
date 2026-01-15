@@ -9,8 +9,8 @@
   <main class="max-w-4xl mx-auto">
     <div class="flex justify-between items-center mb-10">
         <h1 class="text-3xl font-black italic">INCIDENT LOG FILE</h1>
-        <button onclick="localStorage.removeItem('incidentLog'); location.reload();" 
-                class="text-xs font-bold text-red-500 hover:underline">
+        <button onclick="localStorage.removeItem('incidentHistory'); location.reload();" 
+        class="text-xs font-bold text-red-500 hover:underline">
             CLEAR ALL LOGS
         </button>
     </div>
@@ -19,10 +19,12 @@
         </div>
   </main>
 
+  <script src="services/storage.js"></script>
+
   <script>
     document.addEventListener("DOMContentLoaded", () => {
         // 1. Pull the cumulative list
-        const log = JSON.parse(localStorage.getItem('incidentLog')) || [];
+        const log = StorageService.getHistory();
 
         if (log.length === 0) {
             document.getElementById("logContainer").innerHTML = "<p class='text-slate-400'>No incidents recorded yet.</p>";
