@@ -10,9 +10,13 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <style>
-    body { font-family: 'Inter', sans-serif; }
-    /* Simple fade-in for dynamic content */
-    #suspectSection { transition: all 0.3s ease-in-out; }
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+
+    #suspectSection {
+      transition: all 0.3s ease-in-out;
+    }
   </style>
 </head>
 
@@ -21,9 +25,12 @@
   <header class="sticky top-0 z-50 bg-white shadow-sm">
     <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
       <div class="flex items-center gap-3 font-bold text-xl">
-        <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-blue-500 to-emerald-500 flex items-center justify-center text-white">
+        <div
+          class="w-9 h-9 rounded-lg bg-gradient-to-br from-blue-500 to-emerald-500 flex items-center justify-center text-white">
           <svg viewBox="0 0 24 24" class="w-6 h-6 text-white" fill="none" stroke="currentColor" stroke-width="2.5">
-            <path d="M2 12h10" /><path d="M9 18h3a3 3 0 0 0 3-3V9a3 3 0 0 1 3-3h3" /><path d="M12 12a3 3 0 0 1 3 3v3" />
+            <path d="M2 12h10" />
+            <path d="M9 18h3a3 3 0 0 0 3-3V9a3 3 0 0 1 3-3h3" />
+            <path d="M12 12a3 3 0 0 1 3 3v3" />
           </svg>
         </div>
         <span class="bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-700">
@@ -35,6 +42,7 @@
         <a href="#" class="text-blue-600 font-semibold">Dashboard</a>
         <a href="history.html" class="hover:text-blue-600">History</a>
         <a href="map.html" class="hover:text-blue-600">Map</a>
+        <a href="incident.html" class="hover:text-blue-600">Incident Log</a>
       </nav>
     </div>
   </header>
@@ -44,7 +52,8 @@
     <div class="flex flex-wrap gap-6 items-center mb-10">
       <div>
         <label class="text-sm text-slate-500 font-medium">City</label>
-        <select id="citySelector" class="block mt-1 px-4 py-2 rounded-lg border border-slate-300 bg-white font-semibold outline-none focus:ring-2 focus:ring-blue-500">
+        <select id="citySelector"
+          class="block mt-1 px-4 py-2 rounded-lg border border-slate-300 bg-white font-semibold outline-none focus:ring-2 focus:ring-blue-500">
           <option value="Ernakulam">Ernakulam</option>
           <option value="Delhi">Delhi</option>
           <option value="Mumbai">Mumbai</option>
@@ -53,8 +62,9 @@
 
       <div>
         <label class="text-sm text-slate-500 font-medium">Monitoring Zone</label>
-        <select id="zoneSelector" class="block mt-1 px-4 py-2 rounded-lg border border-slate-300 bg-white font-semibold outline-none focus:ring-2 focus:ring-blue-500">
-          </select>
+        <select id="zoneSelector"
+          class="block mt-1 px-4 py-2 rounded-lg border border-slate-300 bg-white font-semibold outline-none focus:ring-2 focus:ring-blue-500">
+        </select>
       </div>
 
       <div class="ml-auto text-sm text-slate-500 bg-white px-3 py-1 rounded-full border border-slate-200">
@@ -81,7 +91,8 @@
         <div class="text-xs text-slate-400 mt-1 uppercase tracking-wider">Calculated</div>
       </div>
 
-      <div id="statusCard" class="rounded-2xl p-6 border shadow-sm flex flex-col justify-between transition-colors duration-500">
+      <div id="statusCard"
+        class="rounded-2xl p-6 border shadow-sm flex flex-col justify-between transition-colors duration-500">
         <div>
           <div class="text-sm font-medium mb-1">Alert Status</div>
           <div id="statusText" class="text-2xl font-extrabold">--</div>
@@ -89,7 +100,8 @@
             Recorded at: <span id="spikeTimeValue">--</span>
           </div>
         </div>
-        <button id="incidentBtn" class="hidden mt-4 bg-red-600 text-white py-2 rounded-lg font-bold hover:bg-red-700 transition transform active:scale-95">
+        <button id="incidentBtn"
+          class="hidden mt-4 bg-red-600 text-white py-2 rounded-lg font-bold hover:bg-red-700 transition transform active:scale-95">
           INVESTIGATE SOURCE
         </button>
       </div>
@@ -108,7 +120,8 @@
     <section id="suspectSection" class="hidden bg-white rounded-2xl p-6 border border-red-200 shadow-lg">
       <div class="flex items-center gap-2 mb-6 text-red-600 border-b border-red-100 pb-4">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
         </svg>
         <h3 class="font-extrabold text-xl">AI-Scored Probable Sources</h3>
       </div>
@@ -121,8 +134,7 @@
               <th class="pb-3 px-2">Proximity</th>
             </tr>
           </thead>
-          <tbody id="suspectTableBody" class="divide-y divide-slate-50">
-            </tbody>
+          <tbody id="suspectTableBody" class="divide-y divide-slate-50"></tbody>
         </table>
       </div>
     </section>
@@ -138,7 +150,6 @@
   <script>
     const API_URL = 'http://localhost:3000/api/report';
 
-    // Dependent Dropdown Mapping
     const cityStations = {
       "Ernakulam": ["Vyttila Mobility Hub", "Kaloor Junction", "Kakkanad SmartCity", "Edappally Toll", "MG Road (Maharajas)", "Eloor Industrial Area", "Aluva Manappuram", "Kalamassery Startup Village", "Fort Kochi Pier", "Tripunithura Statue"],
       "Delhi": ["Anand Vihar ISBT", "R.K. Puram", "Punjabi Bagh", "ITO Junction"],
@@ -148,16 +159,14 @@
     function populateZones() {
       const city = document.getElementById("citySelector").value;
       const zoneSelect = document.getElementById("zoneSelector");
-      
-      zoneSelect.innerHTML = ""; // Clear
+      zoneSelect.innerHTML = "";
       cityStations[city].forEach(station => {
         const opt = document.createElement("option");
         opt.value = station;
         opt.textContent = station;
         zoneSelect.appendChild(opt);
       });
-      
-      updateDashboard(); // Refresh data immediately
+      updateDashboard();
     }
 
     async function updateDashboard() {
@@ -183,14 +192,34 @@
         const incidentBtn = document.getElementById("incidentBtn");
 
         if (data.isSpike) {
-          // ALERT VIEW
+          // --- LOGIC: CUMULATIVE INCIDENT LOG ---
+          // 1. Retrieve the existing log or create an empty array if it's the first spike
+          let incidentLog = JSON.parse(localStorage.getItem('incidentLog')) || [];
+
+          // 2. Check if this specific station has already been logged to prevent duplicates
+          const alreadyLogged = incidentLog.some(item => item.station === data.station);
+
+          if (!alreadyLogged) {
+            // 3. Add the new spike data to our collection
+            incidentLog.push(data);
+
+            // 4. Save the expanded list back to localStorage
+            localStorage.setItem('incidentLog', JSON.stringify(incidentLog));
+            console.log(`✅ Logged new incident for ${data.station}`);
+          }
+
+          // UI Updates (Show the Red Alert Card)
+          statusCard.className = "rounded-2xl p-6 border bg-red-50 border-red-400 flex flex-col justify-between";
+          document.getElementById("statusText").innerText = "POLLUTION SPIKE";
+          document.getElementById("incidentBtn").classList.remove("hidden");
+          // ALERT UI
           statusCard.className = "rounded-2xl p-6 border bg-red-50 border-red-400 flex flex-col justify-between";
           statusText.innerText = "POLLUTION SPIKE";
           statusText.className = "text-2xl font-extrabold text-red-700";
-          
+
           spikeTimeBox.classList.remove("hidden");
           document.getElementById("spikeTimeValue").innerText = data.spikeDetectedAt || "Unknown";
-          
+
           incidentBtn.classList.remove("hidden");
           suspectSection.classList.remove("hidden");
 
@@ -214,7 +243,7 @@
           statusCard.className = "rounded-2xl p-6 border bg-emerald-50 border-emerald-400 flex flex-col justify-between";
           statusText.innerText = "AIR QUALITY: GOOD";
           statusText.className = "text-2xl font-extrabold text-emerald-700";
-          
+
           spikeTimeBox.classList.add("hidden");
           incidentBtn.classList.add("hidden");
           suspectSection.classList.add("hidden");
@@ -223,7 +252,7 @@
         // Action Persistence
         incidentBtn.onclick = () => {
           localStorage.setItem('activeIncident', JSON.stringify(data));
-          window.location.href = 'map.html';
+          window.location.href = 'map.html'; // Goes to log view
         };
 
       } catch (e) {
@@ -232,13 +261,12 @@
       }
     }
 
-    // INITIALIZATION
     document.addEventListener('DOMContentLoaded', () => {
       document.getElementById("citySelector").addEventListener('change', populateZones);
       document.getElementById("zoneSelector").addEventListener('change', updateDashboard);
-      
-      populateZones(); // Auto-start
+      populateZones();
     });
   </script>
 </body>
+
 </html>
