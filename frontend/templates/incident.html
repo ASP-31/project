@@ -20,40 +20,90 @@
   </main>
 
   <script src="services/storage.js"></script>
+<script>
+    // 1. Define the global list of stations to scan
+    const cityStations = {
+        "Ernakulam": ["Vyttila Mobility Hub", "Kaloor Junction", "Kakkanad SmartCity", "Edappally Toll", "MG Road (Maharajas)", "Eloor Industrial Area", "Aluva Manappuram", "Kalamassery Startup Village", "Fort Kochi Pier", "Tripunithura Statue"],
+        "Delhi": ["Anand Vihar ISBT", "R.K. Puram", "Punjabi Bagh", "ITO Junction"],
+        "Mumbai": ["Bandra Kurla Complex", "Colaba", "Worli", "Borivali"]
+    };
 
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-        // 1. Pull the cumulative list
-        const log = StorageService.getHistory();
+    const API_URL = 'http://localhost:3000/api/report';
 
-        if (log.length === 0) {
-            document.getElementById("logContainer").innerHTML = "<p class='text-slate-400'>No incidents recorded yet.</p>";
+    async function scanAllCities() {
+        const container = document.getElementById("logContainer");
+        container.innerHTML = `
+            <div class="text-center py-10">
+                <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-600 mx-auto mb-4"></div>
+                <p class="text-slate-500 font-bold">Scanning all cities for violations...</p>
+            </div>`;
+
+        const allStations = Object.values(cityStations).flat();
+        const activeSpikes = [];
+
+        // 2. Scan every station concurrently
+        const scanPromises = allStations.map(async (station) => {
+            try {
+                const res = await fetch(`${API_URL}?zone=${encodeURIComponent(station)}`);
+                const data = await res.json();
+                if (data.isSpike) {
+                    activeSpikes.push(data);
+                }
+            } catch (err) {
+                console.error(`Failed to scan ${station}`, err);
+            }
+        });
+
+        await Promise.all(scanPromises);
+
+        // 3. UI Logic for results
+        if (activeSpikes.length === 0) {
+            container.innerHTML = `
+                <div class="text-center py-20 bg-white rounded-2xl border-2 border-dashed border-slate-200">
+                    <p class='text-slate-400 font-medium'>No active spikes detected across all cities.</p>
+                </div>`;
             return;
         }
 
-        // 2. Sort by highest AQI first
-        const sortedLog = log.sort((a, b) => b.aqi - a.aqi);
+        // 4. Sort by highest AQI
+        const sortedSpikes = activeSpikes.sort((a, b) => b.aqi - a.aqi);
 
-        // 3. Render the list
-        document.getElementById("logContainer").innerHTML = sortedLog.map(inc => `
-            <div class="bg-white border-l-4 border-red-500 shadow-sm p-6 rounded-r-xl">
+        // 5. Render active violations
+        container.innerHTML = sortedSpikes.map(inc => `
+            <div class="bg-white border-l-4 border-red-500 shadow-lg p-6 rounded-r-xl transform transition hover:scale-[1.01]">
                 <div class="flex justify-between items-start">
                     <div>
-                        <h2 class="text-xl font-bold">${inc.station}</h2>
-                        <p class="text-sm text-slate-500">Detected at: ${inc.spikeDetectedAt}</p>
+                        <div class="flex items-center gap-2 mb-1">
+                             <span class="text-[10px] bg-red-100 text-red-700 px-2 py-0.5 rounded-full font-black uppercase">Active Violation</span>
+                             <h2 class="text-xl font-bold text-slate-900">${inc.station}</h2>
+                        </div>
+                        <p class="text-sm text-slate-500 font-medium italic">Triggered: ${inc.spikeDetectedAt || 'Live'}</p>
                     </div>
                     <div class="text-right">
-                        <div class="text-2xl font-black text-red-600">AQI ${inc.aqi}</div>
-                        <div class="text-xs font-bold text-slate-400 uppercase">PM2.5: ${inc.pm25}</div>
+                        <div class="text-3xl font-black text-red-600">AQI ${inc.aqi}</div>
+                        <div class="text-xs font-bold text-slate-400 uppercase tracking-tighter">PM2.5: ${inc.pm25} µg/m³</div>
                     </div>
                 </div>
-                <div class="mt-4 pt-4 border-t border-slate-50">
-                    <span class="text-[10px] font-black text-blue-600 uppercase tracking-widest">Primary Suspect</span>
-                    <p class="font-bold text-slate-800">${inc.suspects[0].name} (${inc.suspects[0].aiScore}% Match)</p>
+                <div class="mt-4 pt-4 border-t border-slate-100 flex justify-between items-end">
+                    <div>
+                        <span class="text-[10px] font-black text-blue-600 uppercase tracking-widest">Primary Source Suspect</span>
+                        <p class="font-bold text-slate-800">${inc.suspects[0].name} (${inc.suspects[0].aiScore}% Match)</p>
+                    </div>
+                    <button onclick='investigate("${inc.station}")' class="text-xs bg-slate-900 text-white px-4 py-2 rounded-lg font-bold hover:bg-blue-600 transition">
+                        View Analysis
+                    </button>
                 </div>
             </div>
         `).join('');
-    });
-  </script>
+    }
+
+    // Helper to sync with other pages
+    function investigate(stationName) {
+        localStorage.setItem('activeIncident', JSON.stringify({ station: stationName }));
+        window.location.href = 'suspected.html';
+    }
+
+    document.addEventListener("DOMContentLoaded", scanAllCities);
+</script>
 </body>
 </html>
