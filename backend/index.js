@@ -1,117 +1,134 @@
 const express = require('express');
 const axios = require('axios');
 const cors = require('cors');
-const fs = require('fs');
 const path = require('path');
 const { getDistance } = require('./services/distance');
 const { scoreSuspect } = require('./services/aiScoring');
+
 const app = express();
 const PORT = 3000;
 
 app.use(cors());
 app.use(express.json());
 
-const OPENAQ_API_KEY = '346d28497811fceb269f9619d71f28dd5f9294ddaf1ff3d3e17e7c665d14454f';
+const OPENAQ_API_KEY = 'ffbf3fb591e7dcce1326d9d485d89b32';
 const scenarios = require('./data/scenarios.json');
 
-// --- HELPER FUNCTIONS ---
-function applyJitter(base) {
-    return parseFloat((base + (Math.random() * 4 - 2)).toFixed(2));
-}
-
-function estimateAQI(pm25) {
-    if (pm25 <= 30) return Math.round(pm25 * 1.5);
-    if (pm25 <= 60) return Math.round((pm25 - 30) * 1.6 + 50);
-    return Math.round(pm25 * 2);
-}
-
-// 1. Tell Express where your HTML files are (templates folder)
 app.use(express.static(path.join(__dirname, '..', 'frontend', 'templates')));
-
-// 2. Tell Express where your CSS/JS/Images are (frontend folder)
 app.use(express.static(path.join(__dirname, '..', 'frontend')));
 
-// 2. Route to serve the dashboard.html specifically
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'frontend', 'templates', 'dashboard.html'));
 });
 
 // --- THE MAIN ROUTE ---
 app.get('/api/report', async (req, res) => {
-    // 1. Get the zone and trim any hidden spaces
     const requestedZone = (req.query.zone || "").trim();
     
-    // 2. SMART MATCHING: Case-insensitive and partial match
-    // This ensures "Kalamassery Startup Village" matches "Kalamassery Startup"
+    // Inlined scenario matching logic
     const scenario = scenarios.find(s => 
-        requestedZone.toLowerCase().includes(s.station.toLowerCase()) || 
+        requestedZone.toLowerCase().includes(s.station.toLowerCase()) ||
         s.station.toLowerCase().includes(requestedZone.toLowerCase())
-    );
-    
-    // 3. Fallback logic with logging for debugging
-    if (!scenario) {
-        console.log(`⚠️ No exact match for "${requestedZone}". Using default.`);
-        var activeScenario = scenarios[0]; 
-    } else {
-        console.log(`✅ Matched Request "${requestedZone}" to Scenario: ${scenario.station}`);
-        var activeScenario = scenario;
-    }
+    ) || scenarios[0];
 
-    let report;
     try {
-        // Try Live API first
-        const response = await axios.get('https://api.openaq.org/v3/locations', {
+        console.log(`📡 Attempting OPENWEATHER API for: ${scenario.station}`);
+        
+        const response = await axios.get('http://api.openweathermap.org/data/2.5/air_pollution', {
             params: { 
-                coordinates: `${activeScenario.lat},${activeScenario.lng}`, 
-                radius: 10000, 
-                parameters_id: 2 
+                lat: scenario.lat, 
+                lon: scenario.lng, 
+                appid: 'ffbf3fb591e7dcce1326d9d485d89b32'
             },
-            headers: { 'X-API-Key': OPENAQ_API_KEY },
-            timeout: 3000
+            timeout: 4000 
         });
 
-        const liveLoc = response.data.results?.find(loc => 
-            loc.sensors.some(s => s.parameter.id === 2 && s.latest)
-        );
+        if (response.data.list && response.data.list.length > 0) {
+            const components = response.data.list[0].components;
+            const pmVal = components.pm2_5;
+            const pm10Val = components.pm10;
 
-        if (liveLoc) {
-            const pmVal = liveLoc.sensors.find(s => s.parameter.id === 2).latest.value;
-            report = generateReport("LIVE_API", activeScenario, pmVal);
-        } else { throw new Error("No live sensors"); }
+            console.log(`✅ API Success: Found PM2.5(${pmVal}) and PM10(${pm10Val})`);
 
+            // Inlined AQI calculation
+            let aqi;
+            if (pmVal <= 30) aqi = Math.round(pmVal * 1.5);
+            else if (pmVal <= 60) aqi = Math.round((pmVal - 30) * 1.6 + 50);
+            else aqi = Math.round(pmVal * 2);
+
+            const isSpike = pmVal > 55;
+            const now = new Date();
+
+            return res.json({
+                source: "OPENWEATHER_API",
+                station: scenario.station,
+                pm25: pmVal,
+                pm10: pm10Val,
+                aqi: aqi,
+                timestamp: now.toISOString(),
+                spikeDetectedAt: isSpike ? scenario.spike_time : null,
+                isSpike: isSpike,
+                suspects: scenario.manual_suspects.map(sus => {
+                    const dist = getDistance(scenario.lat, scenario.lng, sus.lat, sus.lng);
+                    const ai = scoreSuspect({ distance: dist, type: sus.type }, pmVal);
+                    return { 
+                        ...sus, 
+                        distance: dist.toFixed(2),
+                        aiScore: isSpike ? ai.score : 0,
+                        confidence: isSpike ? ai.confidence : "None",
+                        reasoning: isSpike ? ai.reasoning : ["Air quality is within safe limits."],
+                        timestamp: now.toISOString()
+                    };
+                })
+            });
+        } else { 
+            throw new Error("Empty data from OpenWeather"); 
+        }
     } catch (error) {
-        // Use Mock Data if API fails
-        const curPM = applyJitter(activeScenario.base_pm25);
-        report = generateReport("MOCK_DATA", activeScenario, curPM);
+        console.log(`⚠️ API Fail/Empty: Falling back to Mock Data for ${scenario.station}`);
+        
+        // Inlined realistic pollution simulation logic
+        const hour = new Date().getHours();
+        let multiplier = 1.0;
+        if ((hour >= 8 && hour <= 10) || (hour >= 17 && hour <= 20)) multiplier = 1.4;
+        else if (hour >= 23 || hour <= 5) multiplier = 0.4;
+
+        const curPM = parseFloat(((scenario.base_pm25 * multiplier) + (Math.random() * 4 - 2)).toFixed(2));
+        const curPM10 = parseFloat(((scenario.base_pm10 * multiplier) + (Math.random() * 4 - 2)).toFixed(2));
+
+        // Inlined AQI calculation for mock data
+        let aqi;
+        if (curPM <= 30) aqi = Math.round(curPM * 1.5);
+        else if (curPM <= 60) aqi = Math.round((curPM - 30) * 1.6 + 50);
+        else aqi = Math.round(curPM * 2);
+
+        const isSpike = curPM > 55;
+        const now = new Date();
+
+        return res.json({
+            source: "MOCK_DATA",
+            station: scenario.station,
+            pm25: curPM,
+            pm10: curPM10,
+            aqi: aqi,
+            timestamp: now.toISOString(),
+            spikeDetectedAt: isSpike ? scenario.spike_time : null,
+            isSpike: isSpike,
+            suspects: scenario.manual_suspects.map(sus => {
+                const dist = getDistance(scenario.lat, scenario.lng, sus.lat, sus.lng);
+                const ai = scoreSuspect({ distance: dist, type: sus.type }, curPM);
+                return { 
+                    ...sus, 
+                    distance: dist.toFixed(2),
+                    aiScore: isSpike ? ai.score : 0,
+                    confidence: isSpike ? ai.confidence : "None",
+                    reasoning: isSpike ? ai.reasoning : ["Air quality is within safe limits."],
+                    timestamp: now.toISOString()
+                };
+            })
+        });
     }
-    res.json(report);
 });
-
-// Helper to keep code clean
-function generateReport(source, scenario, pmVal) {
-    return {
-        source: source,
-        station: scenario.station, // Returns the specific station name
-        pm25: pmVal,
-        pm10: applyJitter(scenario.base_pm10),
-        aqi: estimateAQI(pmVal),
-        timestamp: new Date().toISOString(),
-        isSpike: pmVal > 50,
-        // Map unique suspects for THIS specific scenario
-        suspects: scenario.manual_suspects.map(sus => {
-            const dist = getDistance(scenario.lat, scenario.lng, sus.lat, sus.lng);
-            const ai = scoreSuspect({ distance: dist, type: sus.type }, pmVal);
-            return { 
-                ...sus, 
-                distance: dist.toFixed(2),
-                aiScore: ai.score,
-                confidence: ai.confidence,
-                reasoning: ai.reasoning 
-            };
-        })
-    };
-}
-
 
 app.listen(PORT, () => {
     console.log(`🚀 Server running on http://localhost:${PORT}`);

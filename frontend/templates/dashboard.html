@@ -7,13 +7,12 @@
   <title>Dashboard | Air Quality System</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
-
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <style>
-    body {
-      font-family: 'Inter', sans-serif;
-    }
+    body { font-family: 'Inter', sans-serif; }
+    /* Simple fade-in for dynamic content */
+    #suspectSection { transition: all 0.3s ease-in-out; }
   </style>
 </head>
 
@@ -21,19 +20,15 @@
 
   <header class="sticky top-0 z-50 bg-white shadow-sm">
     <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-
       <div class="flex items-center gap-3 font-bold text-xl">
-        <div
-          class="w-9 h-9 rounded-lg bg-gradient-to-br from-blue-500 to-emerald-500 flex items-center justify-center text-white">
-          <svg viewBox="0 0 24 24" class="w-6 h-6 text-white" fill="none" stroke="currentColor" stroke-width="2.5"
-            stroke-linecap="round" stroke-linejoin="round">
-            <path d="M2 12h10" />
-            <path d="M9 18h3a3 3 0 0 0 3-3V9a3 3 0 0 1 3-3h3" />
-            <path d="M12 12a3 3 0 0 1 3 3v3" />
+        <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-blue-500 to-emerald-500 flex items-center justify-center text-white">
+          <svg viewBox="0 0 24 24" class="w-6 h-6 text-white" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M2 12h10" /><path d="M9 18h3a3 3 0 0 0 3-3V9a3 3 0 0 1 3-3h3" /><path d="M12 12a3 3 0 0 1 3 3v3" />
           </svg>
         </div>
-        <span class="bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-700">Air Quality <span
-            class="text-blue-600">System</span></span>
+        <span class="bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-700">
+          Air Quality <span class="text-blue-600">System</span>
+        </span>
       </div>
 
       <nav class="flex gap-8 text-slate-600 font-medium">
@@ -49,194 +44,201 @@
     <div class="flex flex-wrap gap-6 items-center mb-10">
       <div>
         <label class="text-sm text-slate-500 font-medium">City</label>
-        <select class="block mt-1 px-4 py-2 rounded-lg border border-slate-300 bg-white font-semibold">
-          <option>Ernakulam</option>
+        <select id="citySelector" class="block mt-1 px-4 py-2 rounded-lg border border-slate-300 bg-white font-semibold outline-none focus:ring-2 focus:ring-blue-500">
+          <option value="Ernakulam">Ernakulam</option>
+          <option value="Delhi">Delhi</option>
+          <option value="Mumbai">Mumbai</option>
         </select>
       </div>
 
       <div>
-        <label class="text-sm text-slate-500 font-medium">Zone</label>
-        <select id="zoneSelector"
-          class="block mt-1 px-4 py-2 rounded-lg border border-slate-300 bg-white font-semibold">
-          <option value="Vyttila Mobility Hub">Vyttila Mobility Hub</option>
-          <option value="Kaloor Junction">Kaloor Junction</option>
-          <option value="Kakkanad SmartCity">Kakkanad SmartCity</option>
-          <option value="Edappally Toll">Edappally Toll</option>
-          <option value="MG Road (Maharajas)">MG Road (Maharajas)</option>
-          <option value="Eloor Industrial Area">Eloor Industrial Area</option>
-          <option value="Aluva Manappuram">Aluva Manappuram</option>
-          <option value="Kalamassery Startup Village">Kalamassery Startup Village</option>
-          <option value="Fort Kochi Pier">Fort Kochi Pier</option>
-          <option value="Tripunithura Statue">Tripunithura Statue</option>
-        </select>
+        <label class="text-sm text-slate-500 font-medium">Monitoring Zone</label>
+        <select id="zoneSelector" class="block mt-1 px-4 py-2 rounded-lg border border-slate-300 bg-white font-semibold outline-none focus:ring-2 focus:ring-blue-500">
+          </select>
       </div>
 
-      <div class="ml-auto text-sm text-slate-500">
-        Last updated: <span id="lastUpdated" class="font-medium">--</span>
+      <div class="ml-auto text-sm text-slate-500 bg-white px-3 py-1 rounded-full border border-slate-200">
+        Live Fetch: <span id="lastUpdated" class="font-medium">--</span>
       </div>
     </div>
 
     <section class="grid md:grid-cols-4 gap-6 mb-10">
-
       <div class="bg-white rounded-2xl p-6 border border-slate-300 shadow-sm">
-        <div class="text-sm text-slate-500 mb-2">PM2.5</div>
+        <div class="text-sm text-slate-500 mb-2 font-medium">PM2.5</div>
         <div class="text-4xl font-extrabold" id="pmValue">--</div>
         <div class="text-xs text-slate-400 mt-1">µg/m³</div>
       </div>
 
       <div class="bg-white rounded-2xl p-6 border border-slate-300 shadow-sm">
-        <div class="text-sm text-slate-500 mb-2">PM10</div>
+        <div class="text-sm text-slate-500 mb-2 font-medium">PM10</div>
         <div class="text-4xl font-extrabold" id="pm10Value">--</div>
         <div class="text-xs text-slate-400 mt-1">µg/m³</div>
       </div>
 
       <div class="bg-white rounded-2xl p-6 border border-slate-300 shadow-sm">
-        <div class="text-sm text-slate-500 mb-2">AQI</div>
+        <div class="text-sm text-slate-500 mb-2 font-medium">AQI</div>
         <div class="text-4xl font-extrabold" id="aqiValue">--</div>
-        <div class="text-xs text-slate-400 mt-1">Calculated</div>
+        <div class="text-xs text-slate-400 mt-1 uppercase tracking-wider">Calculated</div>
       </div>
 
-      <div id="statusCard" class="rounded-2xl p-6 border shadow-sm flex flex-col justify-between">
+      <div id="statusCard" class="rounded-2xl p-6 border shadow-sm flex flex-col justify-between transition-colors duration-500">
         <div>
-          <div class="text-sm font-medium mb-2">Status</div>
+          <div class="text-sm font-medium mb-1">Alert Status</div>
           <div id="statusText" class="text-2xl font-extrabold">--</div>
+          <div id="spikeTimeBox" class="hidden mt-1 text-xs font-bold uppercase tracking-tighter opacity-70">
+            Recorded at: <span id="spikeTimeValue">--</span>
+          </div>
         </div>
-        <button id="incidentBtn"
-          class="hidden mt-4 bg-red-600 text-white py-2 rounded-lg font-semibold hover:bg-red-700 transition">
-          View Incident
+        <button id="incidentBtn" class="hidden mt-4 bg-red-600 text-white py-2 rounded-lg font-bold hover:bg-red-700 transition transform active:scale-95">
+          INVESTIGATE SOURCE
         </button>
       </div>
-
     </section>
 
-    <section class="bg-white rounded-2xl p-6 border border-slate-300 shadow-sm">
-      <h3 class="font-bold text-lg mb-2">Active Monitoring Station</h3>
-      <p class="text-slate-600">
-        Station: <span id="stationName" class="font-semibold">--</span>
+    <section class="bg-white rounded-2xl p-6 border border-slate-300 shadow-sm mb-10">
+      <div class="flex items-center gap-3">
+        <div class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></div>
+        <h3 class="font-bold text-lg">Sensor Identity</h3>
+      </div>
+      <p class="text-slate-600 mt-1">
+        Currently reporting from: <span id="stationName" class="font-semibold text-slate-900">--</span>
       </p>
     </section>
 
+    <section id="suspectSection" class="hidden bg-white rounded-2xl p-6 border border-red-200 shadow-lg">
+      <div class="flex items-center gap-2 mb-6 text-red-600 border-b border-red-100 pb-4">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+        </svg>
+        <h3 class="font-extrabold text-xl">AI-Scored Probable Sources</h3>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full text-left">
+          <thead>
+            <tr class="text-slate-400 border-b border-slate-100 text-xs uppercase font-bold">
+              <th class="pb-3 px-2">Suspect Site</th>
+              <th class="pb-3 px-2">Type</th>
+              <th class="pb-3 px-2">Proximity</th>
+            </tr>
+          </thead>
+          <tbody id="suspectTableBody" class="divide-y divide-slate-50">
+            </tbody>
+        </table>
+      </div>
+    </section>
+
   </main>
-  <section id="suspectSection" class="hidden mt-10 bg-white rounded-2xl p-6 border border-red-200 shadow-sm">
-    <div class="flex items-center gap-2 mb-4 text-red-600">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-          d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-      </svg>
-      <h3 class="font-bold text-lg">Potential Violation Sources (Within 5km)</h3>
-    </div>
-    <div class="overflow-x-auto">
-      <table class="w-full text-left">
-        <thead>
-          <tr class="text-slate-500 border-b border-slate-100 text-sm">
-            <th class="pb-3 font-semibold">Site Name</th>
-            <th class="pb-3 font-semibold">Project Type</th>
-            <th class="pb-3 font-semibold">Distance</th>
-          </tr>
-        </thead>
-        <tbody id="suspectTableBody">
-        </tbody>
-      </table>
-    </div>
-  </section>
-  <footer class="bg-slate-900 text-slate-300 mt-10">
-    <div class="text-center py-6 text-sm border-t border-slate-800">
-      © 2026 Ernakulam Air Quality Project
+
+  <footer class="bg-slate-900 text-slate-400 py-8 border-t border-slate-800">
+    <div class="max-w-7xl mx-auto px-6 text-center text-xs">
+      © 2026 Environmental Intelligence Systems | Ernakulam • Delhi • Mumbai
     </div>
   </footer>
 
   <script>
     const API_URL = 'http://localhost:3000/api/report';
 
-    async function updateDashboard() {
-        const zoneSelect = document.getElementById("zoneSelector");
-        if (!zoneSelect) return;
+    // Dependent Dropdown Mapping
+    const cityStations = {
+      "Ernakulam": ["Vyttila Mobility Hub", "Kaloor Junction", "Kakkanad SmartCity", "Edappally Toll", "MG Road (Maharajas)", "Eloor Industrial Area", "Aluva Manappuram", "Kalamassery Startup Village", "Fort Kochi Pier", "Tripunithura Statue"],
+      "Delhi": ["Anand Vihar ISBT", "R.K. Puram", "Punjabi Bagh", "ITO Junction"],
+      "Mumbai": ["Bandra Kurla Complex", "Colaba", "Worli", "Borivali"]
+    };
 
-        const selectedZone = zoneSelect.value;
-        console.log("AI Analysis Request for:", selectedZone);
-
-        try {
-            // 1. Fetch data with the zone parameter
-            const response = await fetch(`${API_URL}?zone=${encodeURIComponent(selectedZone)}`);
-            if (!response.ok) throw new Error("Backend unreachable");
-
-            const data = await response.json();
-            console.log("AI Analysis Request for:", selectedZone);
-            console.log("AI Response Received:", data);
-
-            // 2. Update UI Numerical Values
-            document.getElementById("pmValue").innerText = data.pm25 || 0;
-            document.getElementById("pm10Value").innerText = data.pm10 || 0;
-            document.getElementById("aqiValue").innerText = data.aqi || 0;
-            document.getElementById("stationName").innerText = data.station || "Unknown";
-            document.getElementById("lastUpdated").innerText = new Date(data.timestamp).toLocaleTimeString();
-
-            // 3. UI Elements for Status Logic
-            const statusCard = document.getElementById("statusCard");
-            const statusText = document.getElementById("statusText");
-            const suspectSection = document.getElementById("suspectSection");
-            const tableBody = document.getElementById("suspectTableBody");
-            const incidentBtn = document.getElementById("incidentBtn");
-
-            if (data.isSpike) {
-                // ALERT STATE: High Pollution Detected
-                statusCard.className = "rounded-2xl p-6 border shadow-sm flex flex-col justify-between bg-red-50 border-red-400";
-                statusText.innerText = "POLLUTION SPIKE";
-                statusText.className = "text-2xl font-extrabold text-red-700";
-
-                if (incidentBtn) incidentBtn.classList.remove("hidden");
-                if (suspectSection) suspectSection.classList.remove("hidden");
-
-                // Populate and Sort Table by AI Score
-                if (tableBody && data.suspects) {
-                    const sorted = data.suspects.sort((a, b) => b.aiScore - a.aiScore);
-                    tableBody.innerHTML = sorted.map(site => `
-                        <tr class="border-b border-slate-50 last:border-0 hover:bg-slate-50 transition">
-                            <td class="py-4 font-medium">
-                                ${site.name} 
-                                <span class="ml-2 px-2 py-0.5 text-[10px] rounded-full bg-slate-100 text-slate-500 font-bold uppercase">
-                                    ${site.confidence}
-                                </span>
-                            </td>
-                            <td class="py-4 text-slate-600 text-sm">${site.type}</td>
-                            <td class="py-4 text-blue-600 font-bold">${site.distance} km</td>
-                        </tr>
-                    `).join('');
-                }
-
-                // Store data for AI suspected page
-                if (incidentBtn) {
-                    incidentBtn.onclick = () => {
-                        localStorage.setItem('activeIncident', JSON.stringify(data));
-                        window.location.href = 'map.html'; 
-                    };
-                }
-
-            } else {
-                // NORMAL STATE: Air Quality within limits
-                statusCard.className = "rounded-2xl p-6 border shadow-sm flex flex-col justify-between bg-emerald-50 border-emerald-400";
-                statusText.innerText = "NORMAL";
-                statusText.className = "text-2xl font-extrabold text-emerald-700";
-
-                if (incidentBtn) incidentBtn.classList.add("hidden");
-                if (suspectSection) suspectSection.classList.add("hidden");
-            }
-
-        } catch (error) {
-            console.error("Dashboard Error:", error);
-            const statusText = document.getElementById("statusText");
-            if (statusText) statusText.innerText = "OFFLINE";
-        }
+    function populateZones() {
+      const city = document.getElementById("citySelector").value;
+      const zoneSelect = document.getElementById("zoneSelector");
+      
+      zoneSelect.innerHTML = ""; // Clear
+      cityStations[city].forEach(station => {
+        const opt = document.createElement("option");
+        opt.value = station;
+        opt.textContent = station;
+        zoneSelect.appendChild(opt);
+      });
+      
+      updateDashboard(); // Refresh data immediately
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
-        const zoneSelect = document.getElementById("zoneSelector");
-        if (zoneSelect) {
-            zoneSelect.addEventListener('change', updateDashboard);
-            updateDashboard(); // Initial load
-        }
-    });
-</script>
-</body>
+    async function updateDashboard() {
+      const zone = document.getElementById("zoneSelector").value;
+      if (!zone) return;
 
+      try {
+        const res = await fetch(`${API_URL}?zone=${encodeURIComponent(zone)}`);
+        const data = await res.json();
+
+        // 1. Numerical Values
+        document.getElementById("pmValue").innerText = data.pm25;
+        document.getElementById("pm10Value").innerText = data.pm10;
+        document.getElementById("aqiValue").innerText = data.aqi;
+        document.getElementById("stationName").innerText = data.station;
+        document.getElementById("lastUpdated").innerText = new Date(data.timestamp).toLocaleTimeString();
+
+        // 2. UI Elements
+        const statusCard = document.getElementById("statusCard");
+        const statusText = document.getElementById("statusText");
+        const suspectSection = document.getElementById("suspectSection");
+        const spikeTimeBox = document.getElementById("spikeTimeBox");
+        const incidentBtn = document.getElementById("incidentBtn");
+
+        if (data.isSpike) {
+          // ALERT VIEW
+          statusCard.className = "rounded-2xl p-6 border bg-red-50 border-red-400 flex flex-col justify-between";
+          statusText.innerText = "POLLUTION SPIKE";
+          statusText.className = "text-2xl font-extrabold text-red-700";
+          
+          spikeTimeBox.classList.remove("hidden");
+          document.getElementById("spikeTimeValue").innerText = data.spikeDetectedAt || "Unknown";
+          
+          incidentBtn.classList.remove("hidden");
+          suspectSection.classList.remove("hidden");
+
+          // Table Population
+          const table = document.getElementById("suspectTableBody");
+          table.innerHTML = data.suspects
+            .sort((a, b) => (b.aiScore || 0) - (a.aiScore || 0))
+            .map(s => `
+              <tr class="hover:bg-red-50/50 transition-colors">
+                <td class="py-4 px-2 font-bold text-slate-800">
+                  ${s.name} 
+                  <span class="ml-2 px-1.5 py-0.5 text-[9px] rounded bg-white border border-slate-200 text-slate-500 font-black uppercase">
+                    ${s.confidence || 'Low'}
+                  </span>
+                </td>
+                <td class="py-4 px-2 text-sm text-slate-500">${s.type}</td>
+                <td class="py-4 px-2 text-blue-600 font-extrabold">${s.distance} km</td>
+              </tr>`).join('');
+        } else {
+          // NORMAL VIEW
+          statusCard.className = "rounded-2xl p-6 border bg-emerald-50 border-emerald-400 flex flex-col justify-between";
+          statusText.innerText = "AIR QUALITY: GOOD";
+          statusText.className = "text-2xl font-extrabold text-emerald-700";
+          
+          spikeTimeBox.classList.add("hidden");
+          incidentBtn.classList.add("hidden");
+          suspectSection.classList.add("hidden");
+        }
+
+        // Action Persistence
+        incidentBtn.onclick = () => {
+          localStorage.setItem('activeIncident', JSON.stringify(data));
+          window.location.href = 'map.html';
+        };
+
+      } catch (e) {
+        console.error("API Connection Error:", e);
+        document.getElementById("statusText").innerText = "OFFLINE";
+      }
+    }
+
+    // INITIALIZATION
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById("citySelector").addEventListener('change', populateZones);
+      document.getElementById("zoneSelector").addEventListener('change', updateDashboard);
+      
+      populateZones(); // Auto-start
+    });
+  </script>
+</body>
 </html>

@@ -5,224 +5,188 @@
   <meta charset="UTF-8" />
   <title>Incident Map | Air Quality System</title>
 
-  <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
-    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <!-- Leaflet -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 
   <style>
-    body {
-      font-family: 'Inter', sans-serif;
-    }
-
-    #map {
-      height: 520px;
-    }
+    body { font-family: 'Inter', sans-serif; }
+    #map { height: 520px; }
   </style>
 </head>
 
 <body class="bg-slate-100">
 
-  <!-- HEADER -->
   <header class="bg-white shadow-md sticky top-0 z-50">
     <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
       <div class="flex items-center gap-3 font-bold text-xl">
-        <div
-          class="w-10 h-10 bg-gradient-to-br from-blue-500 to-emerald-500 rounded-xl flex items-center justify-center text-white">
-          <svg viewBox="0 0 24 24" class="w-6 h-6 text-white" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M2 12h10" />
-            <path d="M9 18h3a3 3 0 0 0 3-3V9a3 3 0 0 1 3-3h3" />
-            <path d="M12 12a3 3 0 0 1 3 3v3" />
-        </svg>
+        <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-blue-500 to-emerald-500 flex items-center justify-center text-white">
+          <svg viewBox="0 0 24 24" class="w-6 h-6 text-white" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M2 12h10" /><path d="M9 18h3a3 3 0 0 0 3-3V9a3 3 0 0 1 3-3h3" /><path d="M12 12a3 3 0 0 1 3 3v3" />
+          </svg>
         </div>
         <span class="bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-700">Air Quality <span class="text-blue-600">System</span></span>
       </div>
 
       <nav class="flex gap-8 text-slate-600 font-medium">
-        <a href="dashboard.html">Dashboard</a>
-        <!-- <a href="incident.html">Incident</a> -->
+        <a href="dashboard.html" class="hover:text-blue-600">Dashboard</a>
         <a href="map.html" class="text-blue-600 font-semibold">Map</a>
       </nav>
     </div>
   </header>
 
-  <!-- CONTENT -->
   <main class="max-w-7xl mx-auto px-6 py-10 grid lg:grid-cols-3 gap-8">
 
-    <!-- LEFT PANEL -->
     <aside class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-6">
+      <h2 class="text-xl font-bold">Incident Explorer</h2>
 
-      <h2 class="text-xl font-bold">Incident Map</h2>
-
-      <!-- Station Selector -->
       <div>
-        <label class="block text-sm font-medium text-slate-600 mb-2">
-          Monitoring Station
-        </label>
-        <select id="stationSelect"
-          class="w-full rounded-xl border border-slate-300 px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
-          <option value="Vyttila Mobility Hub">Vyttila Mobility Hub</option>
-          <option value="Kaloor Junction">Kaloor Junction</option>
-          <option value="Kakkanad SmartCity">Kakkanad SmartCity</option>
-          <option value="Edappally Toll">Edappally Toll</option>
-          <option value="MG Road (Maharajas)">MG Road (Maharajas)</option>
-          <option value="Eloor Industrial Area">Eloor Industrial Area</option>
-          <option value="Aluva Manappuram">Aluva Manappuram</option>
-          <option value="Kalamassery Startup Village">Kalamassery Startup Village</option>
-          <option value="Fort Kochi Pier">Fort Kochi Pier</option>
-          <option value="Tripunithura Statue">Tripunithura Statue</option>
+        <label class="block text-sm font-medium text-slate-600 mb-2">City</label>
+        <select id="citySelect" class="w-full rounded-xl border border-slate-300 px-4 py-2 text-sm focus:ring-2 focus:ring-blue-500">
+          <option value="Ernakulam">Ernakulam</option>
+          <option value="Delhi">Delhi</option>
+          <option value="Mumbai">Mumbai</option>
         </select>
       </div>
 
-      <!-- Info Card -->
-      <div class="rounded-2xl bg-gradient-to-br from-emerald-50 to-white border border-emerald-200 p-5">
-        <h3 class="font-semibold text-emerald-700 mb-2">Station Overview</h3>
-        <p class="text-sm text-slate-700"><strong>Status:</strong> Pollution Spike</p>
-        <p class="text-sm text-slate-700"><strong>PM Level:</strong> 84.5 µg/m³</p>
-        <p class="text-sm text-slate-700"><strong>Suspected Sites:</strong> 3 nearby</p>
+      <div>
+        <label class="block text-sm font-medium text-slate-600 mb-2">Monitoring Station</label>
+        <select id="stationSelect" class="w-full rounded-xl border border-slate-300 px-4 py-2 text-sm focus:ring-2 focus:ring-blue-500">
+          </select>
       </div>
 
-      <!-- Action -->
-      <button onclick="location.href='suspected.html'"
-        class="mt-auto w-full py-3 rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-600 text-white font-semibold shadow-md hover:shadow-lg transition">
-        Identify Probable Source
-      </button>
+      <div class="rounded-2xl bg-gradient-to-br from-emerald-50 to-white border border-emerald-200 p-5">
+        <h3 class="font-semibold text-emerald-700 mb-2">Station Overview</h3>
+        <div id="sidebarContent">
+            <p class="text-sm text-slate-500 italic">Select a station to view details...</p>
+        </div>
+      </div>
 
+      <button onclick="location.href='suspected.html'" class="w-full py-3 rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-600 text-white font-semibold shadow-md hover:shadow-lg transition">
+        View AI Analysis
+      </button>
     </aside>
 
-    <!-- MAP AREA -->
     <section class="lg:col-span-2 bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
       <h2 class="text-xl font-bold mb-4">Live Incident Map</h2>
       <div id="map" class="rounded-xl"></div>
-
-      <p class="text-sm text-slate-500 mt-4">
-        Colored rings indicate distance-based influence zones around the station.
-      </p>
+      <p class="text-sm text-slate-500 mt-4">Red markers indicate AI-identified suspect sources within the influence zone.</p>
     </section>
-
   </main>
 
-  <!-- FOOTER -->
-  <footer class="bg-slate-900 text-slate-300 mt-20">
-    <div class="text-center py-6 text-sm border-t border-slate-700">
-      © 2026 Ernakulam Air Quality Project
-    </div>
-  </footer>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script>
+    // 1. DATA MAPPING
+    const cityStations = {
+      "Ernakulam": ["Vyttila Mobility Hub", "Kaloor Junction", "Kakkanad SmartCity", "Edappally Toll", "MG Road (Maharajas)", "Eloor Industrial Area", "Aluva Manappuram", "Kalamassery Startup Village", "Fort Kochi Pier", "Tripunithura Statue"],
+      "Delhi": ["Anand Vihar ISBT", "R.K. Puram", "Punjabi Bagh", "ITO Junction"],
+      "Mumbai": ["Bandra Kurla Complex", "Colaba", "Worli", "Borivali"]
+    };
 
-  <!-- LEAFLET SCRIPT -->
+    const coordsMap = {
+      "Vyttila Mobility Hub": [9.9670, 76.3200],
+      "Kaloor Junction": [9.9920, 76.2910],
+      "Kakkanad SmartCity": [10.0085, 76.3620],
+      "Edappally Toll": [10.0250, 76.3120],
+      "MG Road (Maharajas)": [9.9750, 76.2850],
+      "Eloor Industrial Area": [10.0450, 76.2950],
+      "Aluva Manappuram": [10.1080, 76.3550],
+      "Kalamassery Startup Village": [10.0520, 76.3250],
+      "Fort Kochi Pier": [9.9680, 76.2420],
+      "Tripunithura Statue": [9.9510, 76.3480],
+      "Anand Vihar ISBT": [28.6476, 77.3158],
+      "R.K. Puram": [28.5653, 77.1747],
+      "Punjabi Bagh": [28.6671, 77.1259],
+      "ITO Junction": [28.6300, 77.2400],
+      "Bandra Kurla Complex": [19.0675, 72.8684],
+      "Colaba": [18.9067, 72.8147],
+      "Worli": [19.0178, 72.8173],
+      "Borivali": [19.2307, 72.8567]
+    };
 
-  <script src="http://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script>
-  // 1. HIGH-ACCURACY COORDINATES (Matched to your scenarios.json)
-  const coordsMap = {
-    "Vyttila Mobility Hub": [9.9670, 76.3200],
-    "Kaloor Junction": [9.9920, 76.2910],
-    "Kakkanad SmartCity": [10.0085, 76.3620],
-    "Edappally Toll": [10.0250, 76.3120],
-    "MG Road (Maharajas)": [9.9750, 76.2850],
-    "Eloor Industrial Area": [10.0450, 76.2950],
-    "Aluva Manappuram": [10.1080, 76.3550],
-    "Kalamassery Startup Village": [10.0520, 76.3250],
-    "Fort Kochi Pier": [9.9680, 76.2420],
-    "Tripunithura Statue": [9.9510, 76.3480]
-  };
+    // 2. INITIALIZE MAP
+    const map = L.map("map").setView([9.9670, 76.3200], 13);
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution: "© OpenStreetMap"
+    }).addTo(map);
 
-  // 2. INITIALIZE MAP
-  const map = L.map("map").setView([9.9670, 76.3200], 13);
-  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    attribution: "© OpenStreetMap"
-  }).addTo(map);
+    let markersLayer = L.layerGroup().addTo(map);
 
-  let markersLayer = L.layerGroup().addTo(map);
+    // 3. CORE FUNCTIONS
+    function populateStations() {
+      const city = document.getElementById("citySelect").value;
+      const stationSelect = document.getElementById("stationSelect");
+      stationSelect.innerHTML = "";
+      
+      cityStations[city].forEach(s => {
+        const opt = document.createElement("option");
+        opt.value = s; opt.textContent = s;
+        stationSelect.appendChild(opt);
+      });
+      updateMap(stationSelect.value);
+    }
 
-  // 3. FETCH DATA & FLY TO LOCATION
-  async function updateMap(stationName) {
-    try {
-      // FIX: Changed https to http for localhost
-      const response = await fetch(`http://localhost:3000/api/report?zone=${encodeURIComponent(stationName)}`);
-      const data = await response.json();
+    async function updateMap(stationName) {
+      try {
+        const response = await fetch(`http://localhost:3000/api/report?zone=${encodeURIComponent(stationName)}`);
+        const data = await response.json();
 
-      markersLayer.clearLayers();
-      const currentCoords = coordsMap[stationName] || [9.9670, 76.3200];
+        markersLayer.clearLayers();
+        const currentCoords = coordsMap[stationName] || [9.9670, 76.3200];
+        map.flyTo(currentCoords, 14, { duration: 1.5 });
 
-      // Smoothly fly to the station
-      map.flyTo(currentCoords, 14, { duration: 1.5 });
+        // Monitoring Station Marker
+        L.marker(currentCoords).addTo(markersLayer)
+          .bindPopup(`<b>Station: ${data.station}</b><br>AQI: ${data.aqi}`)
+          .openPopup();
 
-      // Add Monitoring Station Marker
-      L.marker(currentCoords)
-        .addTo(markersLayer)
-        .bindPopup(`<b>Station: ${data.station}</b><br>PM2.5: ${data.pm25} µg/m³`)
-        .openPopup();
+        // Suspect Site Markers
+        if (data.suspects) {
+          data.suspects.forEach(site => {
+            const marker = L.circleMarker([site.lat, site.lng], {
+              radius: 10, color: '#ef4444', fillOpacity: 0.6
+            }).addTo(markersLayer);
+            marker.bindPopup(`<b>Suspect: ${site.name}</b><br>${site.distance} km away<br>Confidence: ${site.confidence || 'N/A'}`);
+          });
+        }
 
-      // Add Suspect Site Markers
-      if (data.suspects) {
-        data.suspects.forEach(site => {
-          const marker = L.circleMarker([site.lat, site.lng], {
-            radius: 10,
-            color: '#ef4444',
-            fillOpacity: 0.6
-          }).addTo(markersLayer);
-
-          marker.bindPopup(`<b>Suspect: ${site.name}</b><br>${site.distance} km away<br>AI Confidence: ${site.confidence || 'Calculating...'}`);
-        });
-      }
-
-      // Update Sidebar Overview Card
-      const overviewCard = document.querySelector('.rounded-2xl.bg-gradient-to-br');
-      if (overviewCard) {
-        overviewCard.innerHTML = `
-          <h3 class="font-semibold text-emerald-700 mb-2">Station Overview</h3>
+        // Sidebar Update
+        document.getElementById("sidebarContent").innerHTML = `
           <p class="text-sm text-slate-700"><strong>Station:</strong> ${data.station}</p>
           <p class="text-sm text-slate-700"><strong>Status:</strong> ${data.isSpike ? 'Pollution Spike' : 'Normal'}</p>
-          <p class="text-sm text-slate-700"><strong>PM Level:</strong> ${data.pm25} µg/m³</p>
-          <p class="text-sm text-slate-700"><strong>Suspects:</strong> ${data.suspects ? data.suspects.length : 0} nearby</p>
+          <p class="text-sm text-slate-700"><strong>Recorded at:</strong> ${data.spikeDetectedAt || 'N/A'}</p>
+          <p class="text-sm text-slate-700"><strong>PM2.5:</strong> ${data.pm25} µg/m³</p>
         `;
+
+        // Sync local storage for other pages
+        localStorage.setItem('activeIncident', JSON.stringify(data));
+      } catch (error) { console.error("Map Update Error:", error); }
+    }
+
+    // 4. LISTENERS
+    document.getElementById("citySelect").addEventListener("change", populateStations);
+    document.getElementById("stationSelect").addEventListener("change", (e) => updateMap(e.target.value));
+
+    // 5. INITIAL LOAD
+    window.onload = () => {
+      const incidentData = JSON.parse(localStorage.getItem('activeIncident'));
+      if (incidentData && incidentData.station) {
+        // Find which city this station belongs to
+        for (const [city, stations] of Object.entries(cityStations)) {
+            if (stations.includes(incidentData.station)) {
+                document.getElementById("citySelect").value = city;
+                populateStations();
+                document.getElementById("stationSelect").value = incidentData.station;
+                updateMap(incidentData.station);
+                break;
+            }
+        }
+      } else {
+        populateStations();
       }
-    } catch (error) {
-      console.error("Map Update Error:", error);
-    }
-  }
-
-  // 4. DROP-DOWN LISTENER
-  // const stationSelect = document.getElementById("stationSelect");
-  // if (stationSelect) {
-  //   stationSelect.addEventListener("change", (e) => {
-  //     // FIX: Use the value directly since it now matches scenarios.json
-  //     updateMap(e.target.value);
-  //   });
-  // }
-
-  // 4. DROP-DOWN LISTENER
-const stationSelect = document.getElementById("stationSelect");
-if (stationSelect) {
-  stationSelect.addEventListener("change", (e) => {
-    const selectedStation = e.target.value;
-    
-    // --- ADD THIS LINE ---
-    // This saves the new station so suspected.html knows which one to load
-    localStorage.setItem('activeIncident', JSON.stringify({ station: selectedStation }));
-    // ---------------------
-
-    updateMap(selectedStation);
-  });
-}
-
-  // 5. INITIAL LOAD
-  window.onload = () => {
-    const incidentData = JSON.parse(localStorage.getItem('activeIncident'));
-    if (incidentData && incidentData.station) {
-      stationSelect.value = incidentData.station; // Sync dropdown
-      updateMap(incidentData.station);
-    } else {
-      updateMap("Vyttila Mobility Hub");
-    }
-  };
-</script>
+    };
+  </script>
 </body>
-
 </html>

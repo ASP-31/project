@@ -2,180 +2,216 @@
   {
     "id": "EKM_01",
     "station": "Vyttila Mobility Hub",
-    "base_pm25": 82.5,
-    "base_pm10": 115.0,
+    "base_pm25": 82.5, "base_pm10": 115.0,
+    "spike_time": "09:15 AM",
     "lat": 9.9670, "lng": 76.3200,
     "manual_suspects": [
       { "name": "Vyttila Flyover Painting", "type": "Infrastructure", "lat": 9.9675, "lng": 76.3210 },
-      { "name": "Skyline Brownstone", "type": "Residential", "lat": 9.9692, "lng": 76.3255 },
+      { "name": "Skyline Brownstone Site", "type": "Residential", "lat": 9.9692, "lng": 76.3255 },
       { "name": "Metro Extension P320", "type": "Infrastructure", "lat": 9.9655, "lng": 76.3185 },
       { "name": "Thykoodam Bridge Repair", "type": "Roadwork", "lat": 9.9580, "lng": 76.3150 },
-      { "name": "Janatha Road Paving", "type": "Roadwork", "lat": 9.9710, "lng": 76.3240 },
-      { "name": "Chemical Depot", "type": "Industrial", "lat": 10.0430, "lng": 76.2920 },
-      { "name": "Vyttila Auto Stand Renovation", "type": "Commercial", "lat": 9.9680, "lng": 76.3220 },
-      { "name": "Power House Site", "type": "Utility", "lat": 9.9620, "lng": 76.3260 },
-      { "name": "Kaniyampuzha Dredging", "type": "Waterway", "lat": 9.9640, "lng": 76.3300 },
-      { "name": "Mobility Hub Phase 2", "type": "Infrastructure", "lat": 9.9660, "lng": 76.3190 },
-      { "name": "Toc-H School Ext", "type": "Educational", "lat": 9.9705, "lng": 76.3155 }
+      { "name": "Janatha Road Paving", "type": "Roadwork", "lat": 9.9710, "lng": 76.3240 }
     ]
   },
   {
     "id": "EKM_02",
     "station": "Kaloor Junction",
     "base_pm25": 44.0, "base_pm10": 58.2,
+    "spike_time": "08:45 AM",
     "lat": 9.9920, "lng": 76.2910,
     "manual_suspects": [
       { "name": "Market Road Renovation", "type": "Roadwork", "lat": 9.9935, "lng": 76.2925 },
       { "name": "Stadium Parking Deck", "type": "Commercial", "lat": 9.9980, "lng": 76.3000 },
-      { "name": "Banerji Road Paving", "type": "Roadwork", "lat": 9.9950, "lng": 76.2950 },
-      { "name": "Metro Pillar M12", "type": "Infrastructure", "lat": 9.9910, "lng": 76.2890 },
-      { "name": "Pullepady Bridge Painting", "type": "Infrastructure", "lat": 9.9880, "lng": 76.2940 },
-      { "name": "Kaloor Market Wall", "type": "Commercial", "lat": 9.9925, "lng": 76.2920 },
-      { "name": "Lisie Hospital Ext", "type": "Healthcare", "lat": 9.9940, "lng": 76.2880 },
-      { "name": "North Overbridge Tiles", "type": "Roadwork", "lat": 9.9900, "lng": 76.2850 },
-      { "name": "Azad Road Drainage", "type": "Utility", "lat": 9.9960, "lng": 76.2980 },
-      { "name": "Kathrikadavu Pipe Work", "type": "Utility", "lat": 9.9850, "lng": 76.3010 }
+      { "name": "Lisie Hospital Extension", "type": "Healthcare", "lat": 9.9940, "lng": 76.2880 },
+      { "name": "Metro Pillar M12", "type": "Infrastructure", "lat": 9.9910, "lng": 76.2890 }
     ]
   },
   {
     "id": "EKM_03",
     "station": "Kakkanad SmartCity",
     "base_pm25": 142.0, "base_pm10": 195.5,
+    "spike_time": "11:30 AM",
     "lat": 10.0085, "lng": 76.3620,
     "manual_suspects": [
-      { "name": "Sands Infinit", "type": "Commercial", "lat": 10.0090, "lng": 76.3630 },
-      { "name": "Internal Roadwork", "type": "Roadwork", "lat": 10.0070, "lng": 76.3600 },
-      { "name": "Prestige Cyber Green", "type": "Commercial", "lat": 10.0105, "lng": 76.3650 },
-      { "name": "Infopark P2 Gate", "type": "Infrastructure", "lat": 10.0120, "lng": 76.3680 },
-      { "name": "Water Metro Jetty", "type": "Infrastructure", "lat": 10.0010, "lng": 76.3550 },
-      { "name": "SmartCity P3 Foundation", "type": "Commercial", "lat": 10.0095, "lng": 76.3610 },
-      { "name": "InfoPark Club House", "type": "Residential", "lat": 10.0150, "lng": 76.3660 },
-      { "name": "Rajagiri Valley Road", "type": "Roadwork", "lat": 10.0020, "lng": 76.3500 },
-      { "name": "Kakkanad Bridge", "type": "Infrastructure", "lat": 10.0050, "lng": 76.3580 },
-      { "name": "The Waterfront Site", "type": "Residential", "lat": 10.0040, "lng": 76.3690 }
+      { "name": "Sands Infinit Construction", "type": "Commercial", "lat": 10.0090, "lng": 76.3630 },
+      { "name": "Infopark P2 Gate Work", "type": "Infrastructure", "lat": 10.0120, "lng": 76.3680 },
+      { "name": "Water Metro Jetty Site", "type": "Infrastructure", "lat": 10.0010, "lng": 76.3550 },
+      { "name": "SmartCity P3 Foundation", "type": "Commercial", "lat": 10.0095, "lng": 76.3610 }
     ]
   },
   {
     "id": "EKM_04",
     "station": "Edappally Toll",
     "base_pm25": 68.4, "base_pm10": 92.0,
+    "spike_time": "06:15 PM",
     "lat": 10.0250, "lng": 76.3120,
     "manual_suspects": [
-      { "name": "Metro Foundation", "type": "Infrastructure", "lat": 10.0255, "lng": 76.3125 },
-      { "name": "Oberon Mall Ext", "type": "Commercial", "lat": 10.0240, "lng": 76.3100 },
-      { "name": "Lulu Warehouse", "type": "Industrial", "lat": 10.0300, "lng": 76.3080 },
-      { "name": "NH66 Drain Work", "type": "Roadwork", "lat": 10.0220, "lng": 76.3150 },
-      { "name": "St. George Wall", "type": "Infrastructure", "lat": 10.0260, "lng": 76.3110 },
-      { "name": "Toll Junction Signal", "type": "Utility", "lat": 10.0245, "lng": 76.3130 },
-      { "name": "Ponekkara Road", "type": "Roadwork", "lat": 10.0280, "lng": 76.3050 },
-      { "name": "Amrita Hospital Ext", "type": "Healthcare", "lat": 10.0350, "lng": 76.2980 },
-      { "name": "Kunnumpuram Site", "type": "Residential", "lat": 10.0320, "lng": 76.3100 },
-      { "name": "Pathadipalam Bridge", "type": "Infrastructure", "lat": 10.0180, "lng": 76.3160 }
+      { "name": "Metro Extension Pillar", "type": "Infrastructure", "lat": 10.0255, "lng": 76.3125 },
+      { "name": "Oberon Mall Renovation", "type": "Commercial", "lat": 10.0240, "lng": 76.3100 },
+      { "name": "NH66 Drainage Project", "type": "Roadwork", "lat": 10.0220, "lng": 76.3150 }
     ]
   },
   {
     "id": "EKM_05",
     "station": "MG Road (Maharajas)",
     "base_pm25": 31.2, "base_pm10": 42.8,
+    "spike_time": "10:20 AM",
     "lat": 9.9750, "lng": 76.2850,
     "manual_suspects": [
-      { "name": "Centre Square Repair", "type": "Commercial", "lat": 9.9780, "lng": 76.2830 },
-      { "name": "Durbar Hall Road", "type": "Roadwork", "lat": 9.9710, "lng": 76.2810 },
-      { "name": "Hospital Parking", "type": "Infrastructure", "lat": 9.9740, "lng": 76.2860 },
-      { "name": "Maharajas Ground Wall", "type": "Infrastructure", "lat": 9.9760, "lng": 76.2840 },
-      { "name": "Shenoys Theater Ext", "type": "Commercial", "lat": 9.9800, "lng": 76.2820 },
-      { "name": "Law College Tiles", "type": "Infrastructure", "lat": 9.9820, "lng": 76.2850 },
-      { "name": "Subhash Park Gate", "type": "Landscaping", "lat": 9.9730, "lng": 76.2800 },
-      { "name": "Jos Junction Signal", "type": "Utility", "lat": 9.9720, "lng": 76.2845 },
-      { "name": "Convent Road Drain", "type": "Utility", "lat": 9.9770, "lng": 76.2815 },
-      { "name": "Shipyard Gate Repair", "type": "Industrial", "lat": 9.9650, "lng": 76.2880 }
+      { "name": "Centre Square Maintenance", "type": "Commercial", "lat": 9.9780, "lng": 76.2830 },
+      { "name": "Hospital Parking Build", "type": "Infrastructure", "lat": 9.9740, "lng": 76.2860 },
+      { "name": "Maharajas Ground Wall", "type": "Infrastructure", "lat": 9.9760, "lng": 76.2840 }
     ]
   },
   {
     "id": "EKM_06",
     "station": "Eloor Industrial Area",
     "base_pm25": 110.5, "base_pm10": 155.0,
+    "spike_time": "02:30 PM",
     "lat": 10.0450, "lng": 76.2950,
     "manual_suspects": [
-      { "name": "FACT Expansion", "type": "Industrial", "lat": 10.0465, "lng": 76.2980 },
-      { "name": "Chemical Depot", "type": "Industrial", "lat": 10.0430, "lng": 76.2920 },
-      { "name": "Eloor Jetty Repair", "type": "Infrastructure", "lat": 10.0400, "lng": 76.3000 },
-      { "name": "HIL Wall Work", "type": "Industrial", "lat": 10.0480, "lng": 76.2930 },
-      { "name": "Industrial Canal Desilt", "type": "Utility", "lat": 10.0440, "lng": 76.2900 },
-      { "name": "Periyar Bank Paving", "type": "Roadwork", "lat": 10.0470, "lng": 76.3050 },
-      { "name": "TCC Lab Ext", "type": "Industrial", "lat": 10.0420, "lng": 76.2880 },
-      { "name": "Pathalam Bridge Paving", "type": "Roadwork", "lat": 10.0520, "lng": 76.3020 },
-      { "name": "IRE Supply Pipe", "type": "Utility", "lat": 10.0410, "lng": 76.2960 },
-      { "name": "Muppathur Site", "type": "Residential", "lat": 10.0550, "lng": 76.2990 }
+      { "name": "FACT Plant Expansion", "type": "Industrial", "lat": 10.0465, "lng": 76.2980 },
+      { "name": "Chemical Depot Site", "type": "Industrial", "lat": 10.0430, "lng": 76.2920 },
+      { "name": "Eloor Jetty Restoration", "type": "Infrastructure", "lat": 10.0400, "lng": 76.3000 },
+      { "name": "Industrial Canal Desilting", "type": "Utility", "lat": 10.0440, "lng": 76.2900 }
     ]
   },
   {
-    "id": "EKM_07", "station": "Aluva Manappuram",
+    "id": "EKM_07",
+    "station": "Aluva Manappuram",
     "base_pm25": 55.0, "base_pm10": 78.5,
+    "spike_time": "05:15 AM",
     "lat": 10.1080, "lng": 76.3550,
     "manual_suspects": [
-      { "name": "Bank Beautification", "type": "Landscaping", "lat": 10.1095, "lng": 76.3570 },
-      { "name": "Aluva Bridge Paving", "type": "Roadwork", "lat": 10.1060, "lng": 76.3530 },
-      { "name": "Temple Path Work", "type": "Infrastructure", "lat": 10.1100, "lng": 76.3540 },
-      { "name": "Municipal Office Wall", "type": "Infrastructure", "lat": 10.1070, "lng": 76.3500 },
-      { "name": "Flyover Painting", "type": "Infrastructure", "lat": 10.1050, "lng": 76.3480 },
-      { "name": "Periyar Sands Site", "type": "Residential", "lat": 10.1120, "lng": 76.3600 },
-      { "name": "Private Bus Stand Drain", "type": "Utility", "lat": 10.1040, "lng": 76.3510 },
-      { "name": "Railway Station Ext", "type": "Infrastructure", "lat": 10.1020, "lng": 76.3490 },
-      { "name": "U.C College Site", "type": "Educational", "lat": 10.1150, "lng": 76.3400 },
-      { "name": "Market Road Tiles", "type": "Roadwork", "lat": 10.1090, "lng": 76.3520 }
+      { "name": "River Bank Beautification", "type": "Landscaping", "lat": 10.1095, "lng": 76.3570 },
+      { "name": "Aluva Flyover Refurbishment", "type": "Infrastructure", "lat": 10.1050, "lng": 76.3480 },
+      { "name": "Market Road Tiling", "type": "Roadwork", "lat": 10.1090, "lng": 76.3520 }
     ]
   },
   {
-    "id": "EKM_08", "station": "Kalamassery Startup Village",
+    "id": "EKM_08",
+    "station": "Kalamassery Startup Village",
     "base_pm25": 42.0, "base_pm10": 60.5,
+    "spike_time": "12:45 PM",
     "lat": 10.0520, "lng": 76.3250,
     "manual_suspects": [
-      { "name": "Digital Science Park", "type": "Commercial", "lat": 10.0540, "lng": 76.3270 },
-      { "name": "University Lab Site", "type": "Educational", "lat": 10.0500, "lng": 76.3230 },
-      
-      { "name": "Cochin Medical Ext", "type": "Healthcare", "lat": 10.0600, "lng": 76.3350 },
-      { "name": "Kinfra Park Wall", "type": "Industrial", "lat": 10.0550, "lng": 76.3200 },
-      { "name": "HMT Pipe Restoration", "type": "Utility", "lat": 10.0580, "lng": 76.3180 },
-      { "name": "Container Road Drain", "type": "Roadwork", "lat": 10.0650, "lng": 76.3100 },
-      { "name": "Seaport Road Paving", "type": "Roadwork", "lat": 10.0480, "lng": 76.3300 },
-      { "name": "Polytechnic Wall", "type": "Educational", "lat": 10.0450, "lng": 76.3220 },
-      { "name": "Apollo Tyres Gate", "type": "Industrial", "lat": 10.0620, "lng": 76.3280 },
-      { "name": "Premier Junction Signal", "type": "Utility", "lat": 10.0510, "lng": 76.3150 }
+      { "name": "Digital Science Park Site", "type": "Commercial", "lat": 10.0540, "lng": 76.3270 },
+      { "name": "Medical College Extension", "type": "Healthcare", "lat": 10.0600, "lng": 76.3350 },
+      { "name": "Seaport-Airport Road Paving", "type": "Roadwork", "lat": 10.0480, "lng": 76.3300 }
     ]
   },
   {
-    "id": "EKM_09", "station": "Fort Kochi Pier",
+    "id": "EKM_09",
+    "station": "Fort Kochi Pier",
     "base_pm25": 28.5, "base_pm10": 39.0,
+    "spike_time": "07:30 AM",
     "lat": 9.9680, "lng": 76.2420,
     "manual_suspects": [
-      { "name": "Heritage Restoration", "type": "Infrastructure", "lat": 9.9695, "lng": 76.2440 },
-      { "name": "Ro-Ro Jetty Repair", "type": "Infrastructure", "lat": 9.9700, "lng": 76.2480 },
-      { "name": "Beach Wall Paving", "type": "Infrastructure", "lat": 9.9660, "lng": 76.2400 },
-      { "name": "Bastian St. Tiles", "type": "Roadwork", "lat": 9.9685, "lng": 76.2430 },
-      { "name": "Customs House Painting", "type": "Infrastructure", "lat": 9.9710, "lng": 76.2460 },
-      { "name": "Naval Museum Wall", "type": "Infrastructure", "lat": 9.9620, "lng": 76.2410 },
-      { "name": "Mattancherry Hall Repair", "type": "Infrastructure", "lat": 9.9580, "lng": 76.2580 },
-      { "name": "Jew Town Drain Work", "type": "Utility", "lat": 9.9570, "lng": 76.2590 },
-      { "name": "Fort Kochi Bus Stand", "type": "Infrastructure", "lat": 9.9675, "lng": 76.2450 },
-      { "name": "Aspinal Wall P3", "type": "Infrastructure", "lat": 9.9705, "lng": 76.2490 }
+      { "name": "Heritage Building Repair", "type": "Infrastructure", "lat": 9.9695, "lng": 76.2440 },
+      { "name": "Ro-Ro Jetty Maintenance", "type": "Infrastructure", "lat": 9.9700, "lng": 76.2480 },
+      { "name": "Beach Front Restoration", "type": "Infrastructure", "lat": 9.9660, "lng": 76.2400 }
     ]
   },
   {
-    "id": "EKM_10", "station": "Tripunithura Statue",
+    "id": "EKM_10",
+    "station": "Tripunithura Statue",
     "base_pm25": 74.0, "base_pm10": 102.5,
+    "spike_time": "08:15 AM",
     "lat": 9.9510, "lng": 76.3480,
     "manual_suspects": [
-      { "name": "Hill Palace Road", "type": "Roadwork", "lat": 9.9530, "lng": 76.3510 },
-      { "name": "Metro Pillar P150", "type": "Infrastructure", "lat": 9.9490, "lng": 76.3450 },
-      { "name": "Statue Junction Tiles", "type": "Roadwork", "lat": 9.9515, "lng": 76.3485 },
-      { "name": "Railway Flyover", "type": "Infrastructure", "lat": 9.9450, "lng": 76.3420 },
-      { "name": "Poornathrayeesa Wall", "type": "Infrastructure", "lat": 9.9500, "lng": 76.3500 },
-      { "name": "Sn junction Signal", "type": "Utility", "lat": 9.9560, "lng": 76.3400 },
-      { "name": "Chakkamkulangara Site", "type": "Residential", "lat": 9.9580, "lng": 76.3440 },
-      { "name": "Govt Hospital Ext", "type": "Healthcare", "lat": 9.9480, "lng": 76.3530 },
-      { "name": "Vaikom Road Drain", "type": "Utility", "lat": 9.9420, "lng": 76.3470 },
-      { "name": "Thripunithura Jetty", "type": "Infrastructure", "lat": 9.9400, "lng": 76.3350 }
+      { "name": "Hill Palace Roadwork", "type": "Roadwork", "lat": 9.9530, "lng": 76.3510 },
+      { "name": "Metro Rail Pillar P150", "type": "Infrastructure", "lat": 9.9490, "lng": 76.3450 },
+      { "name": "Statue Junction Signaling", "type": "Utility", "lat": 9.9515, "lng": 76.3485 }
+    ]
+  },
+  {
+    "id": "DEL_01",
+    "station": "Anand Vihar ISBT",
+    "base_pm25": 245.0, "base_pm10": 380.5,
+    "spike_time": "07:30 AM",
+    "lat": 28.6476, "lng": 77.3158,
+    "manual_suspects": [
+      { "name": "Ghazipur Landfill Excavation", "type": "Industrial", "lat": 28.6230, "lng": 77.3280 },
+      { "name": "RRTS Construction Hub", "type": "Infrastructure", "lat": 28.6485, "lng": 77.3170 },
+      { "name": "Hindon Canal Dredging", "type": "Waterway", "lat": 28.6350, "lng": 77.3300 }
+    ]
+  },
+  {
+    "id": "DEL_02",
+    "station": "R.K. Puram",
+    "base_pm25": 115.0, "base_pm10": 190.0,
+    "spike_time": "09:00 AM",
+    "lat": 28.5653, "lng": 77.1747,
+    "manual_suspects": [
+      { "name": "Outer Ring Road Paving", "type": "Roadwork", "lat": 28.5660, "lng": 77.1760 },
+      { "name": "Govt Housing Redevelopment", "type": "Residential", "lat": 28.5600, "lng": 77.1800 }
+    ]
+  },
+  {
+    "id": "DEL_03",
+    "station": "Punjabi Bagh",
+    "base_pm25": 140.0, "base_pm10": 210.0,
+    "spike_time": "10:15 AM",
+    "lat": 28.6671, "lng": 77.1259,
+    "manual_suspects": [
+      { "name": "Flyover Expansion Project", "type": "Infrastructure", "lat": 28.6680, "lng": 77.1270 },
+      { "name": "West Delhi Metro Line", "type": "Infrastructure", "lat": 28.6650, "lng": 77.1300 }
+    ]
+  },
+  {
+    "id": "DEL_04",
+    "station": "ITO Junction",
+    "base_pm25": 180.0, "base_pm10": 260.0,
+    "spike_time": "08:30 AM",
+    "lat": 28.6300, "lng": 77.2400,
+    "manual_suspects": [
+      { "name": "Central Vista Redevelopment", "type": "Infrastructure", "lat": 28.6250, "lng": 77.2350 },
+      { "name": "Pragati Maidan Tunnel Work", "type": "Roadwork", "lat": 28.6280, "lng": 77.2450 }
+    ]
+  },
+  {
+    "id": "MUM_01",
+    "station": "Bandra Kurla Complex",
+    "base_pm25": 65.0, "base_pm10": 95.0,
+    "spike_time": "10:00 AM",
+    "lat": 19.0675, "lng": 72.8684,
+    "manual_suspects": [
+      { "name": "BKC Metro Line 3 Station", "type": "Infrastructure", "lat": 19.0680, "lng": 72.8690 },
+      { "name": "Diamond Bourse Expansion", "type": "Commercial", "lat": 19.0640, "lng": 72.8650 },
+      { "name": "Mithi River Cleanup Site", "type": "Waterway", "lat": 19.0600, "lng": 72.8600 }
+    ]
+  },
+  {
+    "id": "MUM_02",
+    "station": "Colaba",
+    "base_pm25": 35.0, "base_pm10": 55.0,
+    "spike_time": "07:00 AM",
+    "lat": 18.9067, "lng": 72.8147,
+    "manual_suspects": [
+      { "name": "Mumbai Coastal Road Site", "type": "Infrastructure", "lat": 18.9100, "lng": 72.8100 },
+      { "name": "Heritage Precinct Repair", "type": "Infrastructure", "lat": 18.9050, "lng": 72.8120 }
+    ]
+  },
+  {
+    "id": "MUM_03",
+    "station": "Worli",
+    "base_pm25": 58.0, "base_pm10": 82.0,
+    "spike_time": "11:15 AM",
+    "lat": 19.0178, "lng": 72.8173,
+    "manual_suspects": [
+      { "name": "Sea Link Connector Site", "type": "Roadwork", "lat": 19.0200, "lng": 72.8150 },
+      { "name": "High-Rise Redevelopment", "type": "Residential", "lat": 19.0150, "lng": 72.8200 }
+    ]
+  },
+  {
+    "id": "MUM_04",
+    "station": "Borivali",
+    "base_pm25": 42.0, "base_pm10": 68.0,
+    "spike_time": "08:00 AM",
+    "lat": 19.2307, "lng": 72.8567,
+    "manual_suspects": [
+      { "name": "National Park Gatework", "type": "Infrastructure", "lat": 19.2320, "lng": 72.8580 },
+      { "name": "Western Express Drain", "type": "Utility", "lat": 19.2280, "lng": 72.8520 }
     ]
   }
 ]
