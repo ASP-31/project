@@ -118,7 +118,7 @@
 
     emptyState.classList.add('hidden');
 
-    history.forEach((item, index) => {
+    [...history].reverse().forEach((item, index) => {
       table.innerHTML += `
         <tr>
           <td class="p-4 font-medium">${item.station}</td>
