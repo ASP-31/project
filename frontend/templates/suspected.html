@@ -131,7 +131,7 @@
           document.getElementById("targetStation").innerText = stationName;
 
           // 2. FETCH AI DATA FROM API
-          const res = await fetch(`http://localhost:3000/api/report?zone=${encodeURIComponent(stationName)}`);
+          const res = await fetch(`/api/report?zone=${encodeURIComponent(stationName)}`);
           const data = await res.json();
 
           // 3. FETCH APPROVED MANUAL DATA FROM LOCALSTORAGE
