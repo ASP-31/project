@@ -128,7 +128,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       const incidentData = JSON.parse(savedData);
       zone = incidentData.station || incidentData.zone || zone;
     }
-    const res = await fetch(`http://localhost:3000/api/report?zone=${encodeURIComponent(zone)}`);
+    const res = await fetch(`/api/report?zone=${encodeURIComponent(zone)}`);
     const data = await res.json();
 
     // Header
