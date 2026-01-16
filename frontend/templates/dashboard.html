@@ -254,8 +254,11 @@
 
         // Action Persistence
         incidentBtn.onclick = () => {
-          StorageService.saveToHistory(data);
-          StorageService.setActiveIncident(data);
+          // This 'data' object contains the .station name (e.g., "Anand Vihar ISBT")
+          // The Map page uses this to find the City and Coordinates.
+          localStorage.setItem('activeIncident', JSON.stringify(data));
+
+          // Redirect to the map
           window.location.href = 'map.html';
         };
 

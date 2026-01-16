@@ -76,117 +76,123 @@
     </section>
   </main>
 
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
     // 1. DATA MAPPING
     const cityStations = {
-      "Ernakulam": ["Vyttila Mobility Hub", "Kaloor Junction", "Kakkanad SmartCity", "Edappally Toll", "MG Road (Maharajas)", "Eloor Industrial Area", "Aluva Manappuram", "Kalamassery Startup Village", "Fort Kochi Pier", "Tripunithura Statue"],
-      "Delhi": ["Anand Vihar ISBT", "R.K. Puram", "Punjabi Bagh", "ITO Junction"],
-      "Mumbai": ["Bandra Kurla Complex", "Colaba", "Worli", "Borivali"]
+        "Ernakulam": ["Vyttila Mobility Hub", "Kaloor Junction", "Kakkanad SmartCity", "Edappally Toll", "MG Road (Maharajas)", "Eloor Industrial Area", "Aluva Manappuram", "Kalamassery Startup Village", "Fort Kochi Pier", "Tripunithura Statue"],
+        "Delhi": ["Anand Vihar ISBT", "R.K. Puram", "Punjabi Bagh", "ITO Junction"],
+        "Mumbai": ["Bandra Kurla Complex", "Colaba", "Worli", "Borivali"]
     };
 
     const coordsMap = {
-      "Vyttila Mobility Hub": [9.9670, 76.3200],
-      "Kaloor Junction": [9.9920, 76.2910],
-      "Kakkanad SmartCity": [10.0085, 76.3620],
-      "Edappally Toll": [10.0250, 76.3120],
-      "MG Road (Maharajas)": [9.9750, 76.2850],
-      "Eloor Industrial Area": [10.0450, 76.2950],
-      "Aluva Manappuram": [10.1080, 76.3550],
-      "Kalamassery Startup Village": [10.0520, 76.3250],
-      "Fort Kochi Pier": [9.9680, 76.2420],
-      "Tripunithura Statue": [9.9510, 76.3480],
-      "Anand Vihar ISBT": [28.6476, 77.3158],
-      "R.K. Puram": [28.5653, 77.1747],
-      "Punjabi Bagh": [28.6671, 77.1259],
-      "ITO Junction": [28.6300, 77.2400],
-      "Bandra Kurla Complex": [19.0675, 72.8684],
-      "Colaba": [18.9067, 72.8147],
-      "Worli": [19.0178, 72.8173],
-      "Borivali": [19.2307, 72.8567]
+        "Vyttila Mobility Hub": [9.9670, 76.3200], "Kaloor Junction": [9.9920, 76.2910], "Kakkanad SmartCity": [10.0085, 76.3620],
+        "Edappally Toll": [10.0250, 76.3120], "MG Road (Maharajas)": [9.9750, 76.2850], "Eloor Industrial Area": [10.0450, 76.2950],
+        "Aluva Manappuram": [10.1080, 76.3550], "Kalamassery Startup Village": [10.0520, 76.3250], "Fort Kochi Pier": [9.9680, 76.2420],
+        "Tripunithura Statue": [9.9510, 76.3480], "Anand Vihar ISBT": [28.6476, 77.3158], "R.K. Puram": [28.5653, 77.1747],
+        "Punjabi Bagh": [28.6671, 77.1259], "ITO Junction": [28.6300, 77.2400], "Bandra Kurla Complex": [19.0675, 72.8684],
+        "Colaba": [18.9067, 72.8147], "Worli": [19.0178, 72.8173], "Borivali": [19.2307, 72.8567]
     };
 
-    // 2. INITIALIZE MAP
+    // 2. INITIALIZE MAP (Defaults to Ernakulam center)
     const map = L.map("map").setView([9.9670, 76.3200], 13);
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      attribution: "© OpenStreetMap"
+        attribution: "© OpenStreetMap"
     }).addTo(map);
 
     let markersLayer = L.layerGroup().addTo(map);
 
     // 3. CORE FUNCTIONS
-    function populateStations() {
-      const city = document.getElementById("citySelect").value;
-      const stationSelect = document.getElementById("stationSelect");
-      stationSelect.innerHTML = "";
-      
-      cityStations[city].forEach(s => {
-        const opt = document.createElement("option");
-        opt.value = s; opt.textContent = s;
-        stationSelect.appendChild(opt);
-      });
-      updateMap(stationSelect.value);
+    function populateStations(targetStation = null) {
+        const city = document.getElementById("citySelect").value;
+        const stationSelect = document.getElementById("stationSelect");
+        stationSelect.innerHTML = "";
+        
+        cityStations[city].forEach(s => {
+            const opt = document.createElement("option");
+            opt.value = s; opt.textContent = s;
+            stationSelect.appendChild(opt);
+        });
+
+        // If we came from Dashboard, select that specific station
+        if (targetStation) {
+            stationSelect.value = targetStation;
+        }
+        
+        updateMap(stationSelect.value);
     }
 
     async function updateMap(stationName) {
-      try {
-        const response = await fetch(`http://localhost:3000/api/report?zone=${encodeURIComponent(stationName)}`);
-        const data = await response.json();
+        if (!stationName) return;
+        try {
+            const response = await fetch(`http://localhost:3000/api/report?zone=${encodeURIComponent(stationName)}`);
+            const data = await response.json();
 
-        markersLayer.clearLayers();
-        const currentCoords = coordsMap[stationName] || [9.9670, 76.3200];
-        map.flyTo(currentCoords, 14, { duration: 1.5 });
+            markersLayer.clearLayers();
+            const currentCoords = coordsMap[stationName];
+            
+            // Pan and Zoom smoothly to the station
+            map.flyTo(currentCoords, 14, { duration: 1.5 });
 
-        // Monitoring Station Marker
-        L.marker(currentCoords).addTo(markersLayer)
-          .bindPopup(`<b>Station: ${data.station}</b><br>AQI: ${data.aqi}`)
-          .openPopup();
+            // Main Station Marker
+            L.marker(currentCoords).addTo(markersLayer)
+                .bindPopup(`<b>Station: ${data.station}</b><br>AQI: ${data.aqi}`)
+                .openPopup();
 
-        // Suspect Site Markers
-        if (data.suspects) {
-          data.suspects.forEach(site => {
-            const marker = L.circleMarker([site.lat, site.lng], {
-              radius: 10, color: '#ef4444', fillOpacity: 0.6
-            }).addTo(markersLayer);
-            marker.bindPopup(`<b>Suspect: ${site.name}</b><br>${site.distance} km away<br>Confidence: ${site.confidence || 'N/A'}`);
-          });
+            // Suspect Markers (AI and Approved)
+            if (data.suspects) {
+                data.suspects.forEach(site => {
+                    L.circleMarker([site.lat, site.lng], {
+                        radius: 10, color: '#ef4444', fillOpacity: 0.6
+                    }).addTo(markersLayer)
+                    .bindPopup(`<b>Suspect: ${site.name}</b><br>${site.distance} km away`);
+                });
+            }
+
+            // Update UI Sidebar
+            document.getElementById("sidebarContent").innerHTML = `
+                <p class="text-sm text-slate-700"><strong>Station:</strong> ${data.station}</p>
+                <p class="text-sm text-slate-700"><strong>Status:</strong> ${data.isSpike ? '<span class="text-red-600 font-bold">Spike</span>' : 'Normal'}</p>
+                <p class="text-sm text-slate-700"><strong>PM2.5:</strong> ${data.pm25} µg/m³</p>
+            `;
+            
+            // Ensure this station remains active for the Suspected page
+            localStorage.setItem('activeIncident', JSON.stringify(data));
+        } catch (error) {
+            console.error("Map Update Error:", error);
         }
-
-        // Sidebar Update
-        document.getElementById("sidebarContent").innerHTML = `
-          <p class="text-sm text-slate-700"><strong>Station:</strong> ${data.station}</p>
-          <p class="text-sm text-slate-700"><strong>Status:</strong> ${data.isSpike ? 'Pollution Spike' : 'Normal'}</p>
-          <p class="text-sm text-slate-700"><strong>Recorded at:</strong> ${data.spikeDetectedAt || 'N/A'}</p>
-          <p class="text-sm text-slate-700"><strong>PM2.5:</strong> ${data.pm25} µg/m³</p>
-        `;
-
-        // Sync local storage for other pages
-        localStorage.setItem('activeIncident', JSON.stringify(data));
-      } catch (error) { console.error("Map Update Error:", error); }
     }
 
     // 4. LISTENERS
-    document.getElementById("citySelect").addEventListener("change", populateStations);
+    document.getElementById("citySelect").addEventListener("change", () => populateStations());
     document.getElementById("stationSelect").addEventListener("change", (e) => updateMap(e.target.value));
 
-    // 5. INITIAL LOAD
+    // 5. THE CRITICAL REDIRECT LOGIC
     window.onload = () => {
-      const incidentData = JSON.parse(localStorage.getItem('activeIncident'));
-      if (incidentData && incidentData.station) {
-        // Find which city this station belongs to
-        for (const [city, stations] of Object.entries(cityStations)) {
-            if (stations.includes(incidentData.station)) {
-                document.getElementById("citySelect").value = city;
-                populateStations();
-                document.getElementById("stationSelect").value = incidentData.station;
-                updateMap(incidentData.station);
-                break;
+        const incidentData = JSON.parse(localStorage.getItem('activeIncident'));
+        
+        if (incidentData && incidentData.station) {
+            let foundCity = null;
+            
+            // Search through our mapping to find the city for this station
+            for (const [city, stations] of Object.entries(cityStations)) {
+                if (stations.includes(incidentData.station)) {
+                    foundCity = city;
+                    break;
+                }
             }
+
+            if (foundCity) {
+                // Set the City dropdown
+                document.getElementById("citySelect").value = foundCity;
+                // Populate stations and specifically select the target station
+                populateStations(incidentData.station); 
+            } else {
+                populateStations();
+            }
+        } else {
+            populateStations();
         }
-      } else {
-        populateStations();
-      }
     };
-  </script>
-</body>
+</script></body>
 </html>
