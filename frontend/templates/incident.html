@@ -1,75 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <title>Incident Log | Air Quality System</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+    <meta charset="UTF-8">
+    <title>Incident Log | Air Quality System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
+
 <body class="bg-slate-100 p-10">
-  <main class="max-w-4xl mx-auto">
-    <div class="flex justify-between items-center mb-10">
-        <h1 class="text-3xl font-black italic">INCIDENT LOG FILE</h1>
-        <button onclick="localStorage.removeItem('incidentHistory'); location.reload();" 
-        class="text-xs font-bold text-red-500 hover:underline">
-            CLEAR ALL LOGS
-        </button>
-    </div>
-
-    <div id="logContainer" class="space-y-6">
+    <main class="max-w-4xl mx-auto">
+        <div class="flex justify-between items-center mb-10">
+            <h1 class="text-3xl font-black italic">INCIDENT LOG FILE</h1>
+            <button onclick="localStorage.removeItem('incidentHistory'); location.reload();"
+                class="text-xs font-bold text-red-500 hover:underline">
+                CLEAR ALL LOGS
+            </button>
         </div>
-  </main>
 
-  <script src="services/storage.js"></script>
-<script>
-    // 1. Define the global list of stations to scan
-    const cityStations = {
-        "Ernakulam": ["Vyttila Mobility Hub", "Kaloor Junction", "Kakkanad SmartCity", "Edappally Toll", "MG Road (Maharajas)", "Eloor Industrial Area", "Aluva Manappuram", "Kalamassery Startup Village", "Fort Kochi Pier", "Tripunithura Statue"],
-        "Delhi": ["Anand Vihar ISBT", "R.K. Puram", "Punjabi Bagh", "ITO Junction"],
-        "Mumbai": ["Bandra Kurla Complex", "Colaba", "Worli", "Borivali"]
-    };
+        <div id="logContainer" class="space-y-6">
+        </div>
+    </main>
 
-    const API_URL = 'http://localhost:3000/api/report';
+    <script src="services/storage.js"></script>
+    <script>
+        // 1. Define the global list of stations to scan
+        const cityStations = {
+            "Ernakulam": ["Vyttila Mobility Hub", "Kaloor Junction", "Kakkanad SmartCity", "Edappally Toll", "MG Road (Maharajas)", "Eloor Industrial Area", "Aluva Manappuram", "Kalamassery Startup Village", "Fort Kochi Pier", "Tripunithura Statue"],
+            "Delhi": ["Anand Vihar ISBT", "R.K. Puram", "Punjabi Bagh", "ITO Junction"],
+            "Mumbai": ["Bandra Kurla Complex", "Colaba", "Worli", "Borivali"]
+        };
 
-    async function scanAllCities() {
-        const container = document.getElementById("logContainer");
-        container.innerHTML = `
+        const API_URL = 'http://localhost:3000/api/report';
+
+        async function scanAllCities() {
+            const container = document.getElementById("logContainer");
+            container.innerHTML = `
             <div class="text-center py-10">
                 <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-600 mx-auto mb-4"></div>
                 <p class="text-slate-500 font-bold">Scanning all cities for violations...</p>
             </div>`;
 
-        const allStations = Object.values(cityStations).flat();
-        const activeSpikes = [];
+            const allStations = Object.values(cityStations).flat();
+            const activeSpikes = [];
 
-        // 2. Scan every station concurrently
-        const scanPromises = allStations.map(async (station) => {
-            try {
-                const res = await fetch(`${API_URL}?zone=${encodeURIComponent(station)}`);
-                const data = await res.json();
-                if (data.isSpike) {
-                    activeSpikes.push(data);
+            // 2. Scan every station concurrently
+            const scanPromises = allStations.map(async (station) => {
+                try {
+                    const res = await fetch(`${API_URL}?zone=${encodeURIComponent(station)}`);
+                    const data = await res.json();
+                    if (data.isSpike) {
+                        activeSpikes.push(data);
+                    }
+                } catch (err) {
+                    console.error(`Failed to scan ${station}`, err);
                 }
-            } catch (err) {
-                console.error(`Failed to scan ${station}`, err);
-            }
-        });
+            });
 
-        await Promise.all(scanPromises);
+            await Promise.all(scanPromises);
 
-        // 3. UI Logic for results
-        if (activeSpikes.length === 0) {
-            container.innerHTML = `
+            // 3. UI Logic for results
+            if (activeSpikes.length === 0) {
+                container.innerHTML = `
                 <div class="text-center py-20 bg-white rounded-2xl border-2 border-dashed border-slate-200">
                     <p class='text-slate-400 font-medium'>No active spikes detected across all cities.</p>
                 </div>`;
-            return;
-        }
+                return;
+            }
 
-        // 4. Sort by highest AQI
-        const sortedSpikes = activeSpikes.sort((a, b) => b.aqi - a.aqi);
+            // 4. Sort by highest AQI
+            const sortedSpikes = activeSpikes.sort((a, b) => {
+                // Helper function to convert "HH:MM AM/PM" to a comparable number
+                const parseTime = (timeStr) => {
+                    if (!timeStr || timeStr === 'Live') return Date.now(); // Put live ones at the top
 
-        // 5. Render active violations
-        container.innerHTML = sortedSpikes.map(inc => `
+                    const [time, modifier] = timeStr.split(' ');
+                    let [hours, minutes] = time.split(':');
+
+                    if (hours === '12') hours = '00';
+                    if (modifier === 'PM') hours = parseInt(hours, 10) + 12;
+
+                    // Return as a number (HHMM) for easy comparison
+                    return parseInt(`${hours}${minutes}`, 10);
+                };
+
+                // Sort descending (Most recent/Latest time at the top)
+                // If you want oldest first, use: parseTime(a.spikeDetectedAt) - parseTime(b.spikeDetectedAt)
+                return parseTime(b.spikeDetectedAt) - parseTime(a.spikeDetectedAt);
+            });
+
+            // 5. Render active violations
+            container.innerHTML = sortedSpikes.map(inc => `
             <div class="bg-white border-l-4 border-red-500 shadow-lg p-6 rounded-r-xl transform transition hover:scale-[1.01]">
                 <div class="flex justify-between items-start">
                     <div>
@@ -95,15 +115,16 @@
                 </div>
             </div>
         `).join('');
-    }
+        }
 
-    // Helper to sync with other pages
-    function investigate(stationName) {
-        localStorage.setItem('activeIncident', JSON.stringify({ station: stationName }));
-        window.location.href = 'suspected.html';
-    }
+        // Helper to sync with other pages
+        function investigate(stationName) {
+            localStorage.setItem('activeIncident', JSON.stringify({ station: stationName }));
+            window.location.href = 'suspected.html';
+        }
 
-    document.addEventListener("DOMContentLoaded", scanAllCities);
-</script>
+        document.addEventListener("DOMContentLoaded", scanAllCities);
+    </script>
 </body>
+
 </html>

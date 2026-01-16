@@ -7,10 +7,13 @@
     <title>AirPro | Incident Reporting</title>
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
 
     <style>
-        body { font-family: 'Inter', sans-serif; }
+        body {
+            font-family: 'Inter', sans-serif;
+        }
     </style>
 </head>
 
@@ -18,14 +21,17 @@
     <header class="sticky top-0 z-50 bg-white shadow-md">
         <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
             <div class="flex items-center gap-3 font-bold text-xl tracking-tight">
-                <div class="relative flex items-center justify-center w-10 h-10 bg-gradient-to-br from-blue-500 to-emerald-500 rounded-xl shadow-lg">
-                    <svg viewBox="0 0 24 24" class="w-6 h-6 text-white" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <div
+                    class="relative flex items-center justify-center w-10 h-10 bg-gradient-to-br from-blue-500 to-emerald-500 rounded-xl shadow-lg">
+                    <svg viewBox="0 0 24 24" class="w-6 h-6 text-white" fill="none" stroke="currentColor"
+                        stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M2 12h10" />
                         <path d="M9 18h3a3 3 0 0 0 3-3V9a3 3 0 0 1 3-3h3" />
                         <path d="M12 12a3 3 0 0 1 3 3v3" />
                     </svg>
                 </div>
-                <span class="bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-700">Air Quality <span class="text-blue-600">System</span></span>
+                <span class="bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-700">Air Quality
+                    <span class="text-blue-600">System</span></span>
             </div>
 
             <nav class="flex gap-8 text-slate-600 font-medium">
@@ -38,11 +44,12 @@
     <main class="max-w-5xl mx-auto px-6 py-10">
         <section class="bg-white rounded-2xl shadow-sm border border-slate-200 p-8 mb-8">
             <h2 class="text-2xl font-bold mb-6 text-slate-800">New Incident Report</h2>
-            
+
             <div class="grid md:grid-cols-2 gap-6 mb-8">
                 <div>
                     <label class="text-sm text-slate-500 font-medium uppercase tracking-wider">Target City</label>
-                    <select id="citySelector" class="block w-full mt-1 px-4 py-3 rounded-xl border border-slate-300 bg-white font-semibold outline-none focus:ring-2 focus:ring-blue-500 transition">
+                    <select id="citySelector"
+                        class="block w-full mt-1 px-4 py-3 rounded-xl border border-slate-300 bg-white font-semibold outline-none focus:ring-2 focus:ring-blue-500 transition">
                         <option value="Ernakulam">Ernakulam</option>
                         <option value="Delhi">Delhi</option>
                         <option value="Mumbai">Mumbai</option>
@@ -50,29 +57,36 @@
                 </div>
                 <div>
                     <label class="text-sm text-slate-500 font-medium uppercase tracking-wider">Monitoring Zone</label>
-                    <select id="zoneSelector" class="block w-full mt-1 px-4 py-3 rounded-xl border border-slate-300 bg-white font-semibold outline-none focus:ring-2 focus:ring-blue-500 transition"></select>
+                    <select id="zoneSelector"
+                        class="block w-full mt-1 px-4 py-3 rounded-xl border border-slate-300 bg-white font-semibold outline-none focus:ring-2 focus:ring-blue-500 transition"></select>
                 </div>
             </div>
 
             <div class="border-t border-slate-100 pt-8">
                 <h3 class="text-lg font-bold mb-4 flex items-center gap-2 text-blue-600">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
+                        <path fill-rule="evenodd"
+                            d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
+                            clip-rule="evenodd" />
                     </svg>
                     Manually Add Suspect Site
                 </h3>
                 <div class="grid md:grid-cols-3 gap-4 mb-4">
-                    <input type="text" id="suspectName" placeholder="Site Name (e.g., FACT Plant)" class="px-4 py-3 rounded-xl border border-slate-300 outline-none focus:ring-2 focus:ring-blue-500 transition">
-                    <select id="suspectType" class="px-4 py-3 rounded-xl border border-slate-300 outline-none focus:ring-2 focus:ring-blue-500 transition">
+                    <input type="text" id="suspectName" placeholder="Site Name (e.g., FACT Plant)"
+                        class="px-4 py-3 rounded-xl border border-slate-300 outline-none focus:ring-2 focus:ring-blue-500 transition">
+                    <select id="suspectType"
+                        class="px-4 py-3 rounded-xl border border-slate-300 outline-none focus:ring-2 focus:ring-blue-500 transition">
                         <option value="Industrial">Industrial</option>
                         <option value="Infrastructure">Infrastructure</option>
                         <option value="Roadwork">Roadwork</option>
                         <option value="Residential">Residential</option>
                         <option value="Commercial">Commercial</option>
                     </select>
-                    <input type="number" id="suspectDistance" placeholder="Distance (km)" class="px-4 py-3 rounded-xl border border-slate-300 outline-none focus:ring-2 focus:ring-blue-500 transition">
+                    <input type="number" id="suspectDistance" placeholder="Distance (km)"
+                        class="px-4 py-3 rounded-xl border border-slate-300 outline-none focus:ring-2 focus:ring-blue-500 transition">
                 </div>
-                <button id="addSuspectBtn" class="w-full md:w-auto bg-slate-900 text-white px-8 py-3 rounded-xl font-bold hover:bg-blue-600 transition shadow-lg shadow-slate-200">
+                <button id="addSuspectBtn"
+                    class="w-full md:w-auto bg-slate-900 text-white px-8 py-3 rounded-xl font-bold hover:bg-blue-600 transition shadow-lg shadow-slate-200">
                     Add to Investigation Queue
                 </button>
             </div>
@@ -81,7 +95,8 @@
         <section class="bg-white rounded-2xl shadow-sm border border-slate-200 p-8">
             <div class="flex justify-between items-center mb-6">
                 <h3 class="text-xl font-bold text-slate-800">Investigation Queue</h3>
-                <span id="queueCount" class="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-xs font-black">0 SITES</span>
+                <span id="queueCount" class="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-xs font-black">0
+                    SITES</span>
             </div>
             <div class="overflow-x-auto">
                 <table class="w-full text-left">
@@ -93,7 +108,7 @@
                         </tr>
                     </thead>
                     <tbody id="suspectQueue" class="divide-y divide-slate-50">
-                        </tbody>
+                    </tbody>
                 </table>
             </div>
         </section>
@@ -113,7 +128,7 @@
         function populateZones() {
             const city = document.getElementById("citySelector").value;
             const zoneSelect = document.getElementById("zoneSelector");
-            
+
             zoneSelect.innerHTML = ""; // Clear existing
             cityStations[city].forEach(station => {
                 const opt = document.createElement("option");
@@ -128,38 +143,26 @@
             const name = document.getElementById("suspectName").value.trim();
             const type = document.getElementById("suspectType").value;
             const dist = document.getElementById("suspectDistance").value;
+            const city = document.getElementById("citySelector").value;
+            const zone = document.getElementById("zoneSelector").value;
 
-            if(!name || !dist) {
-                return alert("Please provide both a Site Name and Distance.");
-            }
+            if (!name || !dist) return alert("Please fill all details.");
 
-            const row = `
-                <tr class="hover:bg-slate-50 transition group">
-                    <td class="py-5 px-2">
-                        <div class="font-bold text-slate-800">${name}</div>
-                        <div class="text-[10px] text-slate-400 font-bold uppercase">Manual Entry</div>
-                    </td>
-                    <td class="py-5 px-2">
-                        <span class="px-2 py-1 rounded-md bg-slate-100 text-slate-600 text-[10px] font-bold uppercase">
-                            ${type}
-                        </span>
-                    </td>
-                    <td class="py-5 px-2 text-right">
-                        <span class="font-black text-blue-600">${dist} km</span>
-                    </td>
-                </tr>`;
-            
-            document.getElementById("suspectQueue").insertAdjacentHTML('afterbegin', row);
-            
-            // Increment Queue
-            queueItemCount++;
-            document.getElementById("queueCount").innerText = `${queueItemCount} SITES`;
+            const newRequest = {
+                id: Date.now(), // Unique ID for the admin to find it
+                name, type, dist, city, zone,
+                status: "Pending",
+                timestamp: new Date().toLocaleString()
+            };
 
-            // Clear inputs for next entry
-            document.getElementById("suspectName").value = "";
-            document.getElementById("suspectDistance").value = "";
+            // Save to pending list
+            let pending = JSON.parse(localStorage.getItem('pendingRequests')) || [];
+            pending.push(newRequest);
+            localStorage.setItem('pendingRequests', JSON.stringify(pending));
+
+            alert("Request sent to Admin for approval.");
+            location.reload(); // Refresh to clear
         };
-
         // 4. INITIALIZATION
         document.addEventListener('DOMContentLoaded', () => {
             document.getElementById("citySelector").addEventListener('change', populateZones);
@@ -167,4 +170,5 @@
         });
     </script>
 </body>
+
 </html>

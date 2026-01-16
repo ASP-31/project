@@ -1,19 +1,124 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>data</title>
-    
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel | Air Quality System</title>
   <script src="https://cdn.tailwindcss.com"></script>
-
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
-  <style>
-    body { font-family: 'Inter', sans-serif; }
-  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style> body { font-family: 'Inter', sans-serif; } </style>
 </head>
-<body>
+
+<body class="bg-slate-100 p-6 md:p-10">
+  <div class="max-w-4xl mx-auto">
     
+    <section class="mb-12">
+      <h1 class="text-2xl font-extrabold mb-6 text-slate-800 flex items-center gap-2">
+        <span class="w-3 h-3 bg-amber-500 rounded-full"></span>
+        Pending Suspect Requests
+      </h1>
+      <div id="adminTable" class="space-y-4">
+        </div>
+    </section>
+
+    <section>
+      <h2 class="text-2xl font-extrabold mb-6 text-slate-800 flex items-center gap-2">
+        <span class="w-3 h-3 bg-emerald-500 rounded-full"></span>
+        Live Approved Suspects
+      </h2>
+      <div id="approvedList" class="space-y-4">
+        </div>
+    </section>
+
+  </div>
+
+  <script>
+    // 1. Load Pending Requests
+    function loadAdminData() {
+      const pending = JSON.parse(localStorage.getItem('pendingRequests')) || [];
+      const container = document.getElementById("adminTable");
+
+      if (pending.length === 0) {
+        container.innerHTML = `<p class="text-slate-400 italic">No pending requests.</p>`;
+        return;
+      }
+
+      container.innerHTML = pending.map(req => `
+        <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 flex justify-between items-center">
+            <div>
+                <p class="font-bold text-slate-900">${req.name} <span class="text-xs font-normal text-slate-500">(${req.type})</span></p>
+                <p class="text-xs text-slate-500">Zone: ${req.zone} | Dist: ${req.dist}km</p>
+            </div>
+            <button onclick="approveRequest(${req.id})" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg text-sm font-bold transition">
+                Approve & Push Live
+            </button>
+        </div>
+      `).join('');
+    }
+
+    // 2. Load Approved List
+    function loadApprovedForAdmin() {
+      const approved = JSON.parse(localStorage.getItem('approvedSuspects')) || [];
+      const container = document.getElementById("approvedList");
+
+      if (approved.length === 0) {
+        container.innerHTML = `<p class="text-slate-400 italic">No approved sites yet.</p>`;
+        return;
+      }
+
+      container.innerHTML = approved.map(item => `
+        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex justify-between items-center border-l-4 border-l-emerald-500">
+            <div>
+                <span class="font-bold text-slate-900">${item.name}</span>
+                <p class="text-xs text-slate-500">${item.zone} | ${item.type} | ${item.dist}km</p>
+            </div>
+            <button onclick="deleteApproved(${item.id})" class="text-red-500 hover:bg-red-50 px-4 py-2 rounded-lg text-sm font-bold transition border border-transparent hover:border-red-200">
+                Remove Site
+            </button>
+        </div>
+      `).join('');
+    }
+
+    // 3. Logic to Approve
+    window.approveRequest = (id) => {
+      let pending = JSON.parse(localStorage.getItem('pendingRequests')) || [];
+      let approved = JSON.parse(localStorage.getItem('approvedSuspects')) || [];
+
+      const itemToApprove = pending.find(r => r.id === id);
+      if (itemToApprove) {
+        approved.push(itemToApprove);
+        pending = pending.filter(r => r.id !== id);
+
+        localStorage.setItem('approvedSuspects', JSON.stringify(approved));
+        localStorage.setItem('pendingRequests', JSON.stringify(pending));
+
+        alert("Site approved!");
+        refreshAll();
+      }
+    };
+
+    // 4. Logic to Delete Approved
+    window.deleteApproved = (id) => {
+      if (!confirm("Are you sure you want to remove this suspect from the live list?")) return;
+      
+      let approved = JSON.parse(localStorage.getItem('approvedSuspects')) || [];
+      approved = approved.filter(item => item.id !== id);
+
+      localStorage.setItem('approvedSuspects', JSON.stringify(approved));
+      alert("Suspect removed.");
+      refreshAll();
+    };
+
+    // Helper to reload both lists
+    function refreshAll() {
+      loadAdminData();
+      loadApprovedForAdmin();
+    }
+
+    // Run on Page Load
+    document.addEventListener("DOMContentLoaded", refreshAll);
+
+  </script>
 </body>
 </html>

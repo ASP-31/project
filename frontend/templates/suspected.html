@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <title>Suspected Sources | Air Quality System</title>
@@ -8,147 +9,193 @@
   <script src="https://cdn.tailwindcss.com"></script>
 
   <!-- Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
 
   <style>
-    body { font-family: 'Inter', sans-serif; }
+    body {
+      font-family: 'Inter', sans-serif;
+    }
   </style>
 </head>
 
 <body class="bg-slate-100">
 
-<!-- HEADER -->
-<header class="bg-white shadow-md sticky top-0 z-50">
-  <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-    <div class="flex items-center gap-3 font-bold text-xl">
-      <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-emerald-500 rounded-xl flex items-center justify-center text-white">
-        <svg viewBox="0 0 24 24" class="w-6 h-6 text-white" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+  <!-- HEADER -->
+  <header class="bg-white shadow-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+      <div class="flex items-center gap-3 font-bold text-xl">
+        <div
+          class="w-10 h-10 bg-gradient-to-br from-blue-500 to-emerald-500 rounded-xl flex items-center justify-center text-white">
+          <svg viewBox="0 0 24 24" class="w-6 h-6 text-white" fill="none" stroke="currentColor" stroke-width="2.5"
+            stroke-linecap="round" stroke-linejoin="round">
             <path d="M2 12h10" />
             <path d="M9 18h3a3 3 0 0 0 3-3V9a3 3 0 0 1 3-3h3" />
             <path d="M12 12a3 3 0 0 1 3 3v3" />
-        </svg>
-      </div>
-      <span class="bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-700">Air Quality <span class="text-blue-600">System</span></span>
-    </div>
-
-    <nav class="flex gap-8 text-slate-600 font-medium">
-      <a href="dashboard.html">Dashboard</a>
-      <!-- <a href="incident.html">Incident</a> -->
-      <a href="map.html">Map</a>
-      <a class="text-blue-600 font-semibold">Suspected Sources</a>
-    </nav>
-  </div>
-</header>
-
-<!-- CONTENT -->
-<main class="max-w-7xl mx-auto px-6 py-10 space-y-10">
-
-  <section class="flex justify-between items-end border-b border-slate-200 pb-6">
-    <div>
-      <h1 class="text-3xl font-extrabold mb-2">AI-Identified Pollution Sources</h1>
-      <p class="text-slate-600 max-w-2xl">
-        Automated investigation for <span id="targetStation" class="font-bold text-slate-900">--</span>. 
-        Flagged based on spatial proximity, sensor anomalies, and activity patterns.
-      </p>
-    </div>
-    <div class="text-right">
-       <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">Incident Time</span>
-       <div id="incidentTime" class="text-xl font-black text-blue-600">--</div>
-    </div>
-  </section>
-
-  <section id="suspectsContainer" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-    </section>
-
-  <section id="aiSummary" class="relative bg-gradient-to-br from-blue-50 via-white to-emerald-50 border-2 border-blue-300 rounded-2xl p-8 shadow-lg">
-    <div class="absolute -top-3 left-6 bg-gradient-to-r from-blue-600 to-emerald-600 text-white text-xs font-bold px-4 py-1 rounded-full shadow">
-      AI ANALYTICS VERDICT
-    </div>
-
-    <div class="flex items-start gap-6">
-      <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-blue-600 to-emerald-600 flex items-center justify-center text-white shadow-lg flex-shrink-0">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636-.707.707M21 12h-1M4 12H3m2.343-5.657-.707-.707M6.343 17.657l-.707.707M18 18l-.707-.707M12 21v-1" />
-        </svg>
+          </svg>
+        </div>
+        <span class="bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-700">Air Quality <span
+            class="text-blue-600">System</span></span>
       </div>
 
+      <nav class="flex gap-8 text-slate-600 font-medium">
+        <a href="dashboard.html">Dashboard</a>
+        <!-- <a href="incident.html">Incident</a> -->
+        <a href="map.html">Map</a>
+        <a class="text-blue-600 font-semibold">Suspected Sources</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- CONTENT -->
+  <main class="max-w-7xl mx-auto px-6 py-10 space-y-10">
+
+    <section class="flex justify-between items-end border-b border-slate-200 pb-6">
       <div>
-        <h3 class="text-2xl font-black text-slate-900 mb-3">Investigation Conclusion</h3>
-        <p id="aiSummaryText" class="text-slate-700 leading-relaxed max-w-5xl text-lg">
-          Analyzing spatial data and sensor patterns...
+        <h1 class="text-3xl font-extrabold mb-2">AI-Identified Pollution Sources</h1>
+        <p class="text-slate-600 max-w-2xl">
+          Automated investigation for <span id="targetStation" class="font-bold text-slate-900">--</span>.
+          Flagged based on spatial proximity, sensor anomalies, and activity patterns.
         </p>
       </div>
-    </div>
-  </section>
+      <div class="text-right">
+        <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">Incident Time</span>
+        <div id="incidentTime" class="text-xl font-black text-blue-600">--</div>
+      </div>
+    </section>
 
-  <section class="flex justify-between items-center bg-white p-6 rounded-2xl border border-slate-200">
-    <!-- <button onclick="location.href='map.html'" class="text-slate-500 font-semibold hover:text-blue-600 transition">
+    <section id="suspectsContainer" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+    </section>
+
+    <section id="aiSummary"
+      class="relative bg-gradient-to-br from-blue-50 via-white to-emerald-50 border-2 border-blue-300 rounded-2xl p-8 shadow-lg">
+      <div
+        class="absolute -top-3 left-6 bg-gradient-to-r from-blue-600 to-emerald-600 text-white text-xs font-bold px-4 py-1 rounded-full shadow">
+        AI ANALYTICS VERDICT
+      </div>
+
+      <div class="flex items-start gap-6">
+        <div
+          class="w-14 h-14 rounded-2xl bg-gradient-to-br from-blue-600 to-emerald-600 flex items-center justify-center text-white shadow-lg flex-shrink-0">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+            stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M9.663 17h4.673M12 3v1m6.364 1.636-.707.707M21 12h-1M4 12H3m2.343-5.657-.707-.707M6.343 17.657l-.707.707M18 18l-.707-.707M12 21v-1" />
+          </svg>
+        </div>
+
+        <div>
+          <h3 class="text-2xl font-black text-slate-900 mb-3">Investigation Conclusion</h3>
+          <p id="aiSummaryText" class="text-slate-700 leading-relaxed max-w-5xl text-lg">
+            Analyzing spatial data and sensor patterns...
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="flex justify-between items-center bg-white p-6 rounded-2xl border border-slate-200">
+      <!-- <button onclick="location.href='map.html'" class="text-slate-500 font-semibold hover:text-blue-600 transition">
       ← Back to Map
     </button>
     <button onclick="window.print()" class="px-8 py-3 rounded-xl bg-slate-900 text-white font-bold shadow-md hover:bg-slate-800 transition">
       Export Investigation Report
     </button> -->
-    <button
-      onclick="location.href='report.html'"
-      class="px-8 py-3 rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-600 text-white font-semibold shadow-md hover:shadow-lg transition">
-      Generate Incident Report
-    </button>
-  </section>
+      <button onclick="location.href='report.html'"
+        class="px-8 py-3 rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-600 text-white font-semibold shadow-md hover:shadow-lg transition">
+        Generate Incident Report
+      </button>
+    </section>
 
 
 
-<!-- FOOTER -->
-<footer class="bg-slate-900 text-slate-300 mt-20">
-  <div class="text-center py-6 text-sm border-t border-slate-700">
-    © 2026 Ernakulam Air Quality Project
-  </div>
-</footer>
-  <script>
-document.addEventListener("DOMContentLoaded", async () => {
-  try {
-    const savedData = localStorage.getItem('activeIncident');
-    if (!savedData) {
-        window.location.href = 'dashboard.html';
-        return;
-    }
+    <!-- FOOTER -->
+    <footer class="bg-slate-900 text-slate-300 mt-20">
+      <div class="text-center py-6 text-sm border-t border-slate-700">
+        © 2026 Ernakulam Air Quality Project
+      </div>
+    </footer>
+    <script>
+      document.addEventListener("DOMContentLoaded", async () => {
+        try {
+          // 1. DATA RETRIEVAL
+          const savedData = localStorage.getItem('activeIncident');
+          if (!savedData) {
+            window.location.href = 'dashboard.html';
+            return;
+          }
 
-    const incidentData = JSON.parse(savedData);
-    const stationName = incidentData.station;
-    
-    // UI Update: Header info
-    document.getElementById("targetStation").innerText = stationName;
+          const incidentData = JSON.parse(savedData);
+          const stationName = incidentData.station;
 
-    // Fetch fresh details from backend to get the AI scores
-    const res = await fetch(`http://localhost:3000/api/report?zone=${encodeURIComponent(stationName)}`);
-    const data = await res.json();
+          // Update Header UI
+          document.getElementById("targetStation").innerText = stationName;
 
-    // Set the static story time
-    document.getElementById("incidentTime").innerText = data.spikeDetectedAt || "Normal Limits";
+          // 2. FETCH AI DATA FROM API
+          const res = await fetch(`http://localhost:3000/api/report?zone=${encodeURIComponent(stationName)}`);
+          const data = await res.json();
 
-    const container = document.getElementById("suspectsContainer");
-    container.innerHTML = "";
+          // 3. FETCH APPROVED MANUAL DATA FROM LOCALSTORAGE
+          const allApproved = JSON.parse(localStorage.getItem('approvedSuspects')) || [];
+          // Filter only those that match the current station/zone
+          const zoneApproved = allApproved.filter(s => s.zone === stationName);
 
-    // Sort suspects by AI Score immediately
-    const sortedSuspects = data.suspects.sort((a, b) => b.aiScore - a.aiScore);
+          document.getElementById("incidentTime").innerText = data.spikeDetectedAt || "Normal Limits";
 
-    sortedSuspects.forEach(suspect => {
-      let badgeStyle = "bg-slate-100 text-slate-600";
-      let borderStyle = "border-slate-200";
-      
-      if (suspect.confidence === "High") {
-          badgeStyle = "bg-red-100 text-red-700";
-          borderStyle = "border-red-200 ring-2 ring-red-50";
-      } else if (suspect.confidence === "Medium") {
-          badgeStyle = "bg-orange-100 text-orange-700";
-          borderStyle = "border-orange-200";
-      }
+          const container = document.getElementById("suspectsContainer");
+          container.innerHTML = "";
 
-      const card = `
+          // 4. RENDER AI SUSPECTS
+          const sortedAISuspects = data.suspects.sort((a, b) => b.aiScore - a.aiScore);
+
+          sortedAISuspects.forEach(suspect => {
+            let badgeStyle = "bg-slate-100 text-slate-600";
+            let borderStyle = "border-slate-200";
+
+            if (suspect.confidence === "High") {
+              badgeStyle = "bg-red-100 text-red-700";
+              borderStyle = "border-red-200 ring-2 ring-red-50";
+            } else if (suspect.confidence === "Medium") {
+              badgeStyle = "bg-orange-100 text-orange-700";
+              borderStyle = "border-orange-200";
+            }
+
+            container.insertAdjacentHTML("beforeend", generateCard(suspect, badgeStyle, borderStyle, false));
+          });
+
+          // 5. RENDER ADMIN APPROVED SUSPECTS (Manual Entries)
+          zoneApproved.forEach(suspect => {
+            const manualSuspect = {
+              name: suspect.name,
+              confidence: "Verified",
+              type: suspect.type,
+              distance: suspect.dist,
+              aiScore: 100, // Manual entries are considered 100% verified by admin
+              reasoning: ["Manually verified by environmental inspector", `Reported via Admin Dashboard on ${suspect.timestamp}`]
+            };
+
+            const badgeStyle = "bg-emerald-100 text-emerald-700";
+            const borderStyle = "border-emerald-300 ring-2 ring-emerald-50";
+
+            container.insertAdjacentHTML("beforeend", generateCard(manualSuspect, badgeStyle, borderStyle, true));
+          });
+
+          // 6. GENERATE AI SUMMARY
+          updateAISummary(stationName, sortedAISuspects, zoneApproved.length);
+
+        } catch (err) {
+          console.error("Investigation Load Error:", err);
+          document.getElementById("aiSummaryText").innerText = "Error connecting to API. Ensure backend is running at localhost:3000";
+        }
+      });
+
+      // Helper: Card HTML Generator
+      function generateCard(suspect, badgeStyle, borderStyle, isManual) {
+        return `
         <div class="bg-white rounded-2xl border ${borderStyle} shadow-sm p-6 hover:translate-y-[-4px] transition-all duration-300">
           <div class="flex justify-between items-start mb-4">
             <h2 class="text-lg font-extrabold text-slate-900 leading-tight">${suspect.name}</h2>
             <span class="px-2 py-1 text-[10px] font-black uppercase rounded ${badgeStyle}">
-              ${suspect.confidence}
+              ${isManual ? 'Admin Approved' : suspect.confidence}
             </span>
           </div>
 
@@ -160,51 +207,49 @@ document.addEventListener("DOMContentLoaded", async () => {
 
           <div class="bg-slate-50 rounded-xl p-4 mb-4">
              <div class="flex justify-between text-xs font-bold mb-1">
-                <span class="text-slate-500">AI ATTRIBUTION SCORE</span>
+                <span class="text-slate-500 uppercase">${isManual ? 'Verification Level' : 'AI Attribution Score'}</span>
                 <span class="text-slate-900">${suspect.aiScore}%</span>
              </div>
              <div class="w-full bg-slate-200 h-1.5 rounded-full overflow-hidden">
-                <div class="bg-blue-600 h-full" style="width: ${suspect.aiScore}%"></div>
+                <div class="${isManual ? 'bg-emerald-500' : 'bg-blue-600'} h-full" style="width: ${suspect.aiScore}%"></div>
              </div>
           </div>
 
           <div class="space-y-2">
-            <p class="text-xs font-black text-slate-400 uppercase tracking-widest">Evidence Reasoning</p>
+            <p class="text-xs font-black text-slate-400 uppercase tracking-widest">Investigation Notes</p>
             <ul class="space-y-2">
               ${suspect.reasoning.map(r => `
                 <li class="flex gap-2 text-sm text-slate-600">
-                  <span class="text-blue-500">▹</span> ${r}
+                  <span class="${isManual ? 'text-emerald-500' : 'text-blue-500'}">▹</span> ${r}
                 </li>
               `).join("")}
             </ul>
           </div>
         </div>
-      `;
-      container.insertAdjacentHTML("beforeend", card);
-    });
+    `;
+      }
 
-    // Generate Final AI Summary
-    const highConfidence = sortedSuspects.filter(s => s.confidence === "High");
-    const summaryText = document.getElementById("aiSummaryText");
+      // Helper: AI Summary Logic
+      function updateAISummary(station, aiSuspects, manualCount) {
+        const highConf = aiSuspects.filter(s => s.confidence === "High");
+        const summaryText = document.getElementById("aiSummaryText");
 
-    if (highConfidence.length > 0) {
-      const primary = highConfidence[0];
-      summaryText.innerHTML = `
-        Analysis complete for <strong>${stationName}</strong>. The system has flagged <strong>${highConfidence.length}</strong> 
-        high-probability sources. <span class="text-blue-700 font-bold">${primary.name}</span> shows the strongest correlation 
-        (${primary.aiScore}%) based on current PM levels and proximity. 
-        <br><br>
-        <span class="text-sm italic">Immediate inspection of listed Infrastructure and Industrial sites is recommended.</span>
-      `;
-    } else {
-      summaryText.innerText = "No high-confidence point sources were detected. The current air quality levels suggest secondary pollutants or regional haze rather than a localized violation.";
-    }
+        let html = `Analysis for <strong>${station}</strong> is complete. `;
 
-  } catch (err) {
-    console.error("Investigation Load Error:", err);
-    document.getElementById("aiSummaryText").innerText = "Unable to load investigation data. Please ensure the backend server is running.";
-  }
-});
-</script>
+        if (manualCount > 0) {
+          html += `The Admin has verified <strong>${manualCount}</strong> external report(s). `;
+        }
+
+        if (highConf.length > 0) {
+          const primary = highConf[0];
+          html += `Our AI model flags <strong>${primary.name}</strong> as the primary risk factor (${primary.aiScore}% confidence). `;
+        } else if (manualCount === 0) {
+          html = "No high-confidence sources detected. Pollution may be due to regional weather patterns or transient traffic spikes.";
+        }
+
+        summaryText.innerHTML = html;
+      }
+    </script>
 </body>
+
 </html>
