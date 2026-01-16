@@ -143,7 +143,7 @@
     async function updateMap(stationName) {
       if (!stationName) return;
       try {
-        const response = await fetch(`http://localhost:3000/api/report?zone=${encodeURIComponent(stationName)}`);
+        const response = await fetch(`/api/report?zone=${encodeURIComponent(stationName)}`);
         const data = await response.json();
 
         markersLayer.clearLayers();
