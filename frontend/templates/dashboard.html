@@ -26,6 +26,7 @@
     <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
       <div class="flex items-center gap-3 font-bold text-xl">
         <div
+          id="logo"
           class="w-9 h-9 rounded-lg bg-gradient-to-br from-blue-500 to-emerald-500 flex items-center justify-center text-white">
           <svg viewBox="0 0 24 24" class="w-6 h-6 text-white" fill="none" stroke="currentColor" stroke-width="2.5">
             <path d="M2 12h10" />
@@ -33,7 +34,7 @@
             <path d="M12 12a3 3 0 0 1 3 3v3" />
           </svg>
         </div>
-        <span class="bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-700">
+        <span id="heading" class="bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-700 hover:cursor-pointer">
           Air Quality <span class="text-blue-600">System</span>
         </span>
       </div>
@@ -274,6 +275,12 @@
       document.getElementById("zoneSelector").addEventListener('change', updateDashboard);
       populateZones();
     });
+    heading.addEventListener("click",()=>{
+    window.location.href='index.html'
+  })
+    logo.addEventListener("click",()=>{
+    window.location.href='index.html'
+  })
   </script>
 
 </body>
