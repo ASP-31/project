@@ -176,7 +176,7 @@
     <p class="mt-4 text-lg text-white/90 max-w-2xl mx-auto">
       Join us in our mission to monitor and improve air quality across Ernakulam. Report incidents, track trends, and stay informed about the air you breathe.
     </p>
-    <button class="mt-8 bg-white text-blue-700 px-8 py-4 rounded-xl font-bold shadow-md hover:bg-slate-100 transition flex items-center gap-2 mx-auto">
+    <button id="report-btn" class="mt-8 bg-white text-blue-700 px-8 py-4 rounded-xl font-bold shadow-md hover:bg-slate-100 transition flex items-center gap-2 mx-auto">
       <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
       Report an Incident
     </button>
@@ -204,9 +204,9 @@
     <div>
       <h3 class="text-white font-bold mb-3">Quick Links</h3>
       <ul class="space-y-2 text-sm">
-        <li><a href="#" class="hover:text-white">Dashboard</a></li>
-        <li><a href="#" class="hover:text-white">Report Incident</a></li>
-        <li><a href="#" class="hover:text-white">View Map</a></li>
+        <li><a href="dashboard.html" class="hover:text-white">Dashboard</a></li>
+        <li><a href="reporting.html" class="hover:text-white">Report Incident</a></li>
+        <li><a href="map.html" class="hover:text-white">View Map</a></li>
       </ul>
     </div>
 
@@ -226,14 +226,16 @@
 <script>
   db_btn = document.getElementById('dashboard-btn')
   map_btn = document.getElementById('map-btn')
-
+  report_btn=document.getElementById("report-btn")
   db_btn.addEventListener("click",()=>{
     window.location.href = 'dashboard.html'
   })
   map_btn.addEventListener("click",()=>{
     window.location.href = 'map.html'
   })
-
+  report_btn.addEventListener("click",()=>{
+    window.location.href='reporting.html'
+  })
 </script>
 </body>
 </html>
