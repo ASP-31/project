@@ -42,7 +42,7 @@ The project utilizes a **Client-Server Architecture** optimized for low-latency 
 
 1. Clone the repository
 ```bash
-git clone https://github.com/ASP-31/project
+git clone https://github.com/ASP-31/AirPro
 
 
 ```
